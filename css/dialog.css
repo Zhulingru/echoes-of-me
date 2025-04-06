@@ -1,60 +1,87 @@
 #dialog-box {
-    position: absolute;
-    bottom: 20px;
+    position: fixed;
+    bottom: 180px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    max-width: 800px;
-    background-color: var(--dialog-bg);
-    border: 2px solid var(--accent-color);
-    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
     padding: 20px;
-    color: var(--text-color);
-    font-size: 1.1em;
-    line-height: 1.5;
-    box-shadow: 0 0 20px var(--accent-color-dim);
-    z-index: 10;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 80%;
+    z-index: 1000;
+    border: 1px solid #00ff9d;
 }
 
 .dialog-speaker {
-    color: var(--accent-color);
     font-weight: bold;
     margin-bottom: 10px;
-    font-size: 1.2em;
-    letter-spacing: 1px;
+    color: #00ff9d;
 }
 
 .dialog-text {
-    min-height: 80px;
+    line-height: 1.6;
+    font-size: 16px;
+    white-space: pre-wrap;
 }
 
 #choices-container {
-    position: absolute;
-    bottom: 220px;
+    position: fixed;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
-    max-width: 800px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
-    z-index: 10;
+    width: 80%;
+    max-width: 800px;
+    z-index: 1000;
+    padding: 0 20px;
 }
 
 .choice-button {
-    background-color: var(--dialog-bg);
-    border: 1px solid var(--accent-color);
-    color: var(--text-color);
-    padding: 10px 15px;
-    text-align: left;
-    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: 1px solid #00ff9d;
+    padding: 15px 20px;
+    width: 100%;
+    text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 16px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
 }
 
 .choice-button:hover {
-    background-color: var(--accent-color);
-    color: var(--primary-color);
+    background-color: rgba(0, 255, 157, 0.2);
+    transform: translateY(-2px);
+}
+
+.choice-button:active {
+    transform: translateY(0);
+}
+
+.choice-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 255, 157, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.choice-button:hover::before {
+    left: 100%;
 }
 
 /* 打字機效果動畫 */

@@ -31,19 +31,67 @@ body {
     overflow: hidden;
 }
 
-#scene-container {
-    position: absolute;
+.scene-container {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transition: opacity 0.5s ease;
-    /* 臨時默認背景，直到我們有實際的圖片 */
-    background-color: var(--primary-color);
+    z-index: 1;
+}
+
+.scene-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 20px;
+    z-index: 2;
+}
+
+/* 確保UI元素在背景之上 */
+#dialog-box,
+#choices-container,
+#variables-display {
+    z-index: 1000;
+}
+
+/* 添加背景遮罩，提高文字可讀性 */
+#dialog-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    border-radius: 8px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    #dialog-box {
+        width: 95%;
+        padding: 15px;
+        bottom: 160px;
+    }
+    
+    #choices-container {
+        width: 95%;
+        bottom: 20px;
+    }
+    
+    .choice-button {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
 }
 
 #ui-container {
@@ -323,4 +371,47 @@ body {
 .action-button:hover {
     background-color: var(--accent-color-dim);
     box-shadow: 0 0 10px var(--accent-color);
+}
+
+#volume-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--accent-color);
+    color: white;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#volume-slider {
+    width: 100px;
+    height: 4px;
+    -webkit-appearance: none;
+    background: var(--accent-color-dim);
+    outline: none;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
 } 

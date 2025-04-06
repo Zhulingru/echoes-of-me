@@ -1,7 +1,8 @@
 {
     "id": "S004",
     "name": "反射空間",
-    "background": "assets/images/scene/S004.png",
+    "background": "assets/images/S004.jpg",
+    "music": "assets/music/s004.mp3",
     "speaker": "Mira",
     "dialog": "他們也選擇了你現在的選擇。\n\n每一個失敗者都曾站在這裡，做出相似的決定。\n\n你想怎麼處理這些過去的選擇？",
     "choices": [

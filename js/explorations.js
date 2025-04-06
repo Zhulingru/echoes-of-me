@@ -112,6 +112,11 @@ class ExplorationSystem {
     }
     
     selectMap(mapId) {
+        if (!mapId || !this.maps[mapId]) {
+            console.error('Invalid map ID:', mapId);
+            return;
+        }
+
         if (this.movementPoints <= 0) {
             this.showMessage('你今天的移動點數已用完。');
             return;
@@ -120,27 +125,38 @@ class ExplorationSystem {
         this.currentMap = mapId;
         const mapData = this.maps[mapId];
         
-        // 清除探索菜單
-        document.querySelector('.exploration-container').remove();
+        // 檢查當前UI狀態
+        const existingContainer = document.querySelector('.exploration-container');
+        if (existingContainer) {
+            existingContainer.remove();
+        }
         
         // 顯示地圖
         this.showMap(mapData);
     }
     
     showMap(mapData) {
+        if (!mapData) {
+            console.error('Invalid map data');
+            return;
+        }
+
         // 設置背景
         const sceneContainer = document.getElementById('scene-container');
-        if (sceneContainer) {
-            sceneContainer.style.opacity = '0';
-            
-            setTimeout(() => {
-                sceneContainer.style.backgroundImage = `url(${mapData.image})`;
-                sceneContainer.style.opacity = '1';
-                
-                // 顯示探索信息
-                this.showExplorationInterface(mapData);
-            }, 300);
+        if (!sceneContainer) {
+            console.error('Scene container not found');
+            return;
         }
+
+        sceneContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+            sceneContainer.style.backgroundImage = `url(${mapData.image})`;
+            sceneContainer.style.opacity = '1';
+            
+            // 顯示探索信息
+            this.showExplorationInterface(mapData);
+        }, 300);
     }
     
     showExplorationInterface(mapData) {
@@ -290,8 +306,21 @@ class ExplorationSystem {
     
     // 關閉探索結果
     closeExplorationResult() {
-        document.querySelector('.exploration-result-container').remove();
-        this.showExplorationMenu();
+        const resultContainer = document.querySelector('.exploration-result-container');
+        if (resultContainer) {
+            resultContainer.remove();
+        }
+        
+        // 檢查移動點數
+        if (this.movementPoints <= 0) {
+            // 如果沒有移動點數了，返回當前場景
+            if (window.game && window.game.currentScene) {
+                window.game.renderScene();
+            }
+        } else {
+            // 還有移動點數，顯示探索選單
+            this.showExplorationMenu();
+        }
     }
     
     getVariableName(variable) {

@@ -1,26 +1,27 @@
 {
     "id": "S003",
     "name": "語義殘層",
-    "background": "assets/images/scene/S003.png",
+    "background": "assets/images/S003.jpg",
+    "music": "assets/music/s003.mp3",
     "speaker": "Mira",
     "dialog": "這不是錯誤，這是預設。\n\n兩段記憶重疊在一起，你只能選擇其中一段。\n\n但選擇後，兩段都會消失。",
     "choices": [
         {
             "id": "CH006",
             "text": "選擇第一段記憶",
-            "effects": { "memory": 1, "stable": -1 },
+            "effects": { "memory": 1, "stable": 1 },
             "next": "M002"
         },
         {
             "id": "CH007",
             "text": "選擇第二段記憶",
-            "effects": { "memory": 1, "block": 1 },
+            "effects": { "memory": 1, "block": -1 },
             "next": "S004"
         },
         {
             "id": "CH008",
             "text": "拒絕選擇",
-            "effects": { "anger": 1, "stable": -1 },
+            "effects": { "anger": 2 },
             "next": "S004"
         }
     ]

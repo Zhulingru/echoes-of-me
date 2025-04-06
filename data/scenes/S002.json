@@ -1,14 +1,15 @@
 {
     "id": "S002",
     "name": "鏡前走廊",
-    "background": "assets/images/scene/S002.png",
+    "background": "assets/images/S002.jpg",
+    "music": "assets/music/s002.mp3",
     "speaker": "Mira",
     "dialog": "你還記得……為什麼選這段記憶嗎？\n\n每個鏡子都映出不同版本的你，但哪一個才是真實的？",
     "choices": [
         {
             "id": "CH004-A",
             "text": "點頭",
-            "effects": { "stable": 1, "block": -1 },
+            "effects": { "stable": 2 },
             "next": "M034-A"
         },
         {
@@ -20,7 +21,7 @@
         {
             "id": "CH005",
             "text": "搖頭",
-            "effects": { "anger": 1, "stable": -1 },
+            "effects": { "anger": 1 },
             "next": "S003"
         }
     ]

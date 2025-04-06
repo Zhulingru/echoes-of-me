@@ -1,26 +1,27 @@
 {
     "id": "S001",
     "name": "記憶引渡站",
-    "background": "assets/images/scene/S001.png",
+    "background": "assets/images/S001.jpg",
+    "music": "assets/music/s001.mp3",
     "speaker": "System",
     "dialog": "系統啟動中...\n\n記憶序列檢測完成。\n\n語言模組異常，無法開口。\n\n請從以下三段模糊的記憶中選擇其一：",
     "choices": [
         {
             "id": "CH001",
             "text": "一段關於墜落的記憶",
-            "effects": { "anger": 1, "stable": -1 },
+            "effects": { "anger": 2 },
             "next": "M001"
         },
         {
             "id": "CH002",
-            "text": "一段關於鏡子的記憶",
-            "effects": { "stable": 1, "block": 1 },
+            "text": "一段關於等待的記憶",
+            "effects": { "stable": 2 },
             "next": "M002"
         },
         {
             "id": "CH003",
-            "text": "一段關於聲音的記憶",
-            "effects": { "joy": 1, "block": -1 },
+            "text": "一段關於離別的記憶",
+            "effects": { "joy": -1 },
             "next": "M003"
         }
     ]

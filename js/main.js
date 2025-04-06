@@ -79,15 +79,30 @@ class Game {
     }
     
     switchMode(mode) {
+        if (!mode) {
+            console.error('No mode specified');
+            return;
+        }
+
         console.log(`Switching to ${mode} mode`);
+        
         if (mode === 'explore') {
             console.log('進入探索模式');
             if (window.explorationSystem) {
                 window.explorationSystem.showExplorationMenu();
+            } else {
+                console.error('Exploration system not initialized');
+            }
+            
+            // 播放探索模式音樂
+            if (window.audioSystem) {
+                window.audioSystem.playExplorationMusic();
             }
         } else if (mode === 'battle') {
             console.log('進入戰鬥模式 - 尚未實現');
             // TODO: 實現戰鬥系統
+        } else {
+            console.warn('Unknown game mode:', mode);
         }
     }
     
@@ -97,6 +112,11 @@ class Game {
     }
 
     async loadScene(sceneId) {
+        if (!sceneId) {
+            console.error('No scene ID provided');
+            return;
+        }
+
         try {
             // 檢查是否已經載入過
             let sceneData;
@@ -105,11 +125,20 @@ class Game {
             } else {
                 // 從 JSON 檔案載入場景數據
                 sceneData = await this.fetchSceneData(sceneId);
+                if (!sceneData) {
+                    console.error('Failed to load scene data for:', sceneId);
+                    return;
+                }
                 this.loadedScenes[sceneId] = sceneData;
             }
             
             this.currentScene = sceneData;
             this.renderScene();
+            
+            // 播放場景音樂
+            if (sceneData.music && window.audioSystem) {
+                window.audioSystem.playSceneMusic(sceneData.music);
+            }
         } catch (error) {
             console.error('Error loading scene:', error);
         }
@@ -170,26 +199,47 @@ class Game {
     }
 
     renderScene() {
-        if (!this.currentScene) return;
+        if (!this.currentScene) {
+            console.error('No current scene to render');
+            return;
+        }
+
+        if (!this.sceneContainer) {
+            console.error('Scene container not found');
+            return;
+        }
+
+        // 檢查必要的場景數據
+        if (!this.currentScene.background) {
+            console.error('Scene background not specified');
+            return;
+        }
 
         // 設置背景
-        if (this.sceneContainer) {
-            // 先添加過渡效果
-            this.sceneContainer.style.opacity = '0';
-            
-            setTimeout(() => {
-                // 設置背景圖
-                this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
-                // 淡入效果
-                this.sceneContainer.style.opacity = '1';
-            }, 300);
+        this.sceneContainer.style.opacity = '0';
+        
+        setTimeout(() => {
+            // 設置背景圖
+            this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
+            // 淡入效果
+            this.sceneContainer.style.opacity = '1';
+        }, 300);
+
+        // 檢查對話系統
+        if (!window.dialogSystem) {
+            console.error('Dialog system not initialized');
+            return;
         }
 
         // 顯示對話
-        dialogSystem.showDialog(this.currentScene.dialog, this.currentScene.speaker);
+        window.dialogSystem.showDialog(this.currentScene.dialog, this.currentScene.speaker);
 
         // 顯示選項
-        dialogSystem.showChoices(this.currentScene.choices);
+        if (this.currentScene.choices && Array.isArray(this.currentScene.choices)) {
+            window.dialogSystem.showChoices(this.currentScene.choices);
+        } else {
+            console.warn('No valid choices in current scene');
+        }
     }
     
     async triggerMemory(memoryId) {
