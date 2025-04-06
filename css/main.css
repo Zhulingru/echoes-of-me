@@ -60,7 +60,7 @@ body {
 /* 場景標題 - 置中於頂部 */
 #scene-title {
     width: 60%;
-    margin: 5vh auto 0;
+    margin: 3vh auto 0;
     color: var(--accent-color);
     font-size: 2.5em;
     text-align: center;
@@ -74,7 +74,7 @@ body {
 /* 狀態欄容器 - 位於頂部下方 */
 #status-container {
     width: 60%;
-    margin: 5vh auto 0;
+    margin: 3vh auto 0;
     z-index: 1000;
 }
 
@@ -85,7 +85,7 @@ body {
 }
 
 .status-item {
-    margin: 1.5vh 0;
+    margin: 1vh 0;
     display: flex;
     align-items: center;
     gap: 1vw;
@@ -123,42 +123,44 @@ body {
 
 /* 對話區域 - 居中顯示 */
 #dialog-box {
-    width: 80%;
-    margin: 5vh auto 0;
-    padding: 20px;
+    width: 70%;
+    margin: 8vh auto 0;
+    padding: 15px;
     background: transparent;
     border: 1px solid var(--accent-color);
     border-radius: 5px;
     pointer-events: auto;
-    min-height: 15vh;
+    min-height: 10vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 1.5em;
-    transform: translateY(-50px); /* 向上移動50px */
+    font-size: 1.3em;
+    position: relative;
+    z-index: 50;
 }
 
 /* 選項區域 - 垂直排列 */
 #choices-container {
-    width: 80%;
+    width: 60%;
     margin: 5vh auto 0;
     display: flex;
     flex-direction: column;
     gap: 1.5vh;
     pointer-events: auto;
     z-index: 1000;
+    position: relative;
 }
 
 .choice-button {
-    padding: 1.5vh 20px;
+    padding: 1.2vh 20px;
     background: transparent;
     border: 1px solid var(--accent-color);
     color: var(--text-color);
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1.2em;
+    font-size: 1.1em;
     text-align: center;
 }
 
@@ -169,44 +171,45 @@ body {
 /* 底部系統消息 */
 #system-message {
     position: absolute;
-    bottom: 15vh;
+    bottom: 12vh;
     left: 10%;
     width: 80%;
     text-align: center;
     color: rgba(255, 255, 255, 0.7);
-    font-size: 1.2em;
+    font-size: 1.1em;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 1vh 0;
+    padding: 0.8vh 0;
+    z-index: 40;
 }
 
 /* 底部功能按鈕 */
 #main-buttons {
     position: absolute;
-    bottom: 5vh;
+    bottom: 3vh;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 3vw;
     z-index: 1000;
-    width: 80%;
+    width: 70%;
     justify-content: space-between;
 }
 
 .main-button {
     flex: 1;
-    padding: 1.5vh 0;
+    padding: 1.2vh 0;
     background: transparent;
     border: 1px solid var(--accent-color);
     color: var(--text-color);
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 1.2em;
+    font-size: 1.1em;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .main-button:hover {
@@ -214,8 +217,8 @@ body {
 }
 
 .button-icon {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     color: var(--accent-color);
 }
 
@@ -232,7 +235,7 @@ body {
     justify-content: center;
     align-items: center;
     opacity: 0;
-    z-index: 100;
+    z-index: 2000;
     transition: opacity 1s ease;
 }
 
