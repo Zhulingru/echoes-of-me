@@ -40,7 +40,7 @@ body {
     z-index: 1;
     background-size: cover;
     background-position: center;
-    transition: all 0.5s ease;
+    transition: opacity 0.5s ease;
 }
 
 #ui-container {
@@ -169,4 +169,124 @@ body {
     right: -1px;
     border-left: none;
     border-top: none;
+}
+
+/* 記憶加載效果 */
+.memory-loading::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+}
+
+.memory-loading::after {
+    content: 'Loading Memory...';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-color);
+    font-size: 2em;
+    z-index: 101;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.5;
+        text-shadow: 0 0 5px var(--accent-color);
+    }
+    50% {
+        opacity: 1;
+        text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--accent-color);
+    }
+    100% {
+        opacity: 0.5;
+        text-shadow: 0 0 5px var(--accent-color);
+    }
+}
+
+/* 狀態變更時的視覺效果 */
+.update-flash {
+    animation: flash 0.5s;
+}
+
+@keyframes flash {
+    0% {
+        box-shadow: 0 0 0 var(--accent-color);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--accent-color);
+    }
+    100% {
+        box-shadow: 0 0 0 var(--accent-color);
+    }
+}
+
+.significant-change {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+    20%, 40%, 60%, 80% {transform: translateX(5px);}
+}
+
+/* 混亂模式效果 */
+.chaos-mode #scene-container {
+    animation: glitch 0.5s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        filter: hue-rotate(0deg);
+        transform: translate(0);
+    }
+    10% {
+        filter: hue-rotate(45deg);
+        transform: translate(-2px, 2px);
+    }
+    20% {
+        filter: hue-rotate(90deg);
+        transform: translate(2px, -2px);
+    }
+    30% {
+        filter: hue-rotate(135deg);
+        transform: translate(0);
+    }
+    40% {
+        filter: hue-rotate(180deg);
+        transform: translate(2px, 2px);
+    }
+    50% {
+        filter: hue-rotate(225deg);
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        filter: hue-rotate(270deg);
+        transform: translate(0);
+    }
+    70% {
+        filter: hue-rotate(315deg);
+        transform: translate(-2px, 2px);
+    }
+    80% {
+        filter: hue-rotate(360deg);
+        transform: translate(2px, -2px);
+    }
+    90% {
+        filter: hue-rotate(0deg);
+        transform: translate(0);
+    }
+    100% {
+        filter: hue-rotate(0deg);
+        transform: translate(0);
+    }
 } 
