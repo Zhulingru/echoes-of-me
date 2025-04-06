@@ -215,15 +215,20 @@ class Game {
             return;
         }
 
+        // 清除現有內容
+        if (window.dialogSystem) {
+            window.dialogSystem.clear();
+        }
+
         // 設置背景
-        this.sceneContainer.style.opacity = '0';
-        
-        setTimeout(() => {
-            // 設置背景圖
-            this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
-            // 淡入效果
-            this.sceneContainer.style.opacity = '1';
-        }, 300);
+        this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
+        this.sceneContainer.style.opacity = '1';
+
+        // 確保UI容器可以接收事件
+        const uiContainer = document.getElementById('ui-container');
+        if (uiContainer) {
+            uiContainer.style.pointerEvents = 'auto';
+        }
 
         // 檢查對話系統
         if (!window.dialogSystem) {
@@ -239,6 +244,11 @@ class Game {
             window.dialogSystem.showChoices(this.currentScene.choices);
         } else {
             console.warn('No valid choices in current scene');
+        }
+
+        // 更新變數顯示
+        if (window.gameVars) {
+            window.gameVars.updateUI();
         }
     }
     
