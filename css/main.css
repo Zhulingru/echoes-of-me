@@ -140,6 +140,18 @@ body {
     z-index: 50;
 }
 
+/* 無邊框對話框樣式 */
+#dialog-box.no-border {
+    border: none;
+    background: transparent;
+    font-size: 1.5em;
+    font-weight: 300;
+    padding: 0;
+    margin-top: 12vh;
+    min-height: 8vh;
+    color: var(--accent-color);
+}
+
 /* 選項區域 - 垂直排列 */
 #choices-container {
     width: 60%;
