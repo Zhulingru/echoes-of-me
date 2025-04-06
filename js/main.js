@@ -208,9 +208,13 @@ class Game {
         bgImage.onload = () => {
             console.log('Background image loaded successfully:', this.currentScene.background);
             console.log('Image dimensions:', bgImage.width, 'x', bgImage.height);
+            
+            // 移除開頭的點號，確保路徑正確
+            const backgroundPath = this.currentScene.background.replace(/^\.\//, '');
+            
             requestAnimationFrame(() => {
                 // 設置背景
-                this.sceneContainer.style.backgroundImage = `url("${this.currentScene.background}")`;
+                this.sceneContainer.style.backgroundImage = `url("${backgroundPath}")`;
                 this.sceneContainer.style.backgroundColor = 'var(--primary-color)';
                 console.log('Applied background image style:', this.sceneContainer.style.backgroundImage);
                 // 使用 requestAnimationFrame 確保背景設置後再顯示
@@ -224,7 +228,8 @@ class Game {
             console.error('Failed to load background image:', this.currentScene.background);
             console.error('Error details:', error);
             // 嘗試直接獲取圖片以查看具體錯誤
-            fetch(this.currentScene.background)
+            const backgroundPath = this.currentScene.background.replace(/^\.\//, '');
+            fetch(backgroundPath)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -242,7 +247,9 @@ class Game {
         
         // 開始加載圖片
         console.log('Starting to load background image:', this.currentScene.background);
-        bgImage.src = this.currentScene.background;
+        // 移除開頭的點號，確保路徑正確
+        const backgroundPath = this.currentScene.background.replace(/^\.\//, '');
+        bgImage.src = backgroundPath;
 
         // 確保UI容器可以接收事件
         const uiContainer = document.getElementById('ui-container');
