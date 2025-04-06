@@ -90,13 +90,6 @@ class ExplorationSystem {
         
         menuContainer.appendChild(mapsContainer);
         
-        // 添加返回按鈕
-        const backButton = document.createElement('button');
-        backButton.textContent = '返回';
-        backButton.className = 'exploration-back-btn';
-        backButton.onclick = () => this.returnToMainScene();
-        menuContainer.appendChild(backButton);
-        
         // 創建外層容器並添加到UI
         const container = document.createElement('div');
         container.className = 'exploration-container';
