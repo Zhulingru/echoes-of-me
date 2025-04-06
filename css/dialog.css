@@ -1,6 +1,6 @@
 #dialog-box {
     position: fixed;
-    bottom: 180px;
+    bottom: 230px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
@@ -14,15 +14,23 @@
 }
 
 .dialog-speaker {
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--accent-color);
+    font-size: 1.2em;
+    margin-bottom: 15px;
     font-weight: bold;
-    margin-bottom: 10px;
-    color: #00ff9d;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--accent-color-dim);
 }
 
 .dialog-text {
-    line-height: 1.6;
-    font-size: 16px;
+    font-family: 'Noto Sans TC', sans-serif;
+    line-height: 1.8;
+    font-size: 1.1em;
     white-space: pre-wrap;
+    color: var(--text-color);
+    text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
 }
 
 #choices-container {
@@ -42,6 +50,8 @@
 }
 
 .choice-button {
+    font-family: 'Noto Sans TC', sans-serif;
+    letter-spacing: 1px;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
     border: 1px solid var(--accent-color);
@@ -88,10 +98,20 @@
     left: 100%;
 }
 
-/* 打字機效果動畫 */
+.choice-button.selected {
+    background-color: rgba(0, 255, 157, 0.3);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
+.typing {
+    border-right: 2px solid var(--accent-color);
+    animation: blink 0.75s step-end infinite;
+}
+
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-color); }
 }
 
 /* 動畫效果 */
