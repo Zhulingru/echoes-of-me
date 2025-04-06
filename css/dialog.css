@@ -1,9 +1,9 @@
 #dialog-box {
     position: absolute;
-    bottom: 20px;
+    bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     padding: 20px;
     background: var(--dialog-bg);
     border: 1px solid var(--accent-color);
@@ -11,6 +11,7 @@
     pointer-events: auto;
     box-shadow: 0 0 15px var(--accent-color-dim);
     z-index: 1000;
+    min-height: 120px;
 }
 
 .speaker {
@@ -44,19 +45,19 @@
 
 #choices-container {
     position: absolute;
-    bottom: 200px;
+    bottom: 240px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     pointer-events: auto;
     z-index: 1000;
 }
 
 .choice-button {
-    padding: 12px 20px;
+    padding: 8px 20px;
     background: var(--secondary-color);
     border: 1px solid var(--accent-color);
     color: var(--text-color);
