@@ -136,6 +136,7 @@ body {
     justify-content: center;
     text-align: center;
     font-size: 1.5em;
+    transform: translateY(-50px); /* 向上移動50px */
 }
 
 /* 選項區域 - 垂直排列 */
@@ -233,7 +234,6 @@ body {
     opacity: 0;
     z-index: 100;
     transition: opacity 1s ease;
-    margin-top: -50px; /* 向上移動50px */
 }
 
 .story-text {
