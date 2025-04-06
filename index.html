@@ -122,23 +122,33 @@
     }
 
     .action-buttons {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      gap: 10px;
-      margin-top: 20px;
+      gap: 15px;
+      z-index: 10;
     }
 
     .action-button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      border: none;
+      padding: 12px 0;
+      width: 120px;  /* 調整為較窄的寬度 */
+      background-color: var(--secondary-color);
+      border: 1px solid var(--accent-color);
+      color: var(--text-color);
       border-radius: 5px;
-      color: white;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
     .action-button:hover {
-      background-color: #45a049;
+      background-color: var(--accent-color-dim);
+      box-shadow: 0 0 10px var(--accent-color);
     }
 
     .dialogue-area {
@@ -175,6 +185,11 @@
       <div id="choices-container">
         <!-- 選項會在這裡 -->
       </div>
+      <div class="action-buttons">
+        <button class="action-button" id="explore-btn">探索</button>
+        <button class="action-button" id="battle-btn">戰鬥</button>
+        <button class="action-button" id="memory-btn">記憶</button>
+      </div>
     </div>
   </div>
 
@@ -186,11 +201,6 @@
           <div class="story-text" id="storyText"></div>
           <button class="story-continue" id="storyContinue">繼續</button>
         </div>
-      </div>
-      <div class="action-buttons">
-        <button class="action-button">探索</button>
-        <button class="action-button">戰鬥</button>
-        <button class="action-button">記憶</button>
       </div>
     </div>
     

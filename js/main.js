@@ -4,16 +4,27 @@ class Game {
         this.sceneContainer = document.getElementById('scene-container');
         this.loadedScenes = {};
         this.loadedMemories = {};
-        this.init();
+        
+        // 確保 DOM 完全加載後再初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.init());
+        } else {
+            this.init();
+        }
     }
 
     async init() {
-        // 載入初始場景
-        await this.loadScene('S001');
-        // 初始化變數顯示
-        gameVars.updateUI();
-        // 綁定按鈕事件
-        this.bindButtons();
+        console.log('Game initializing...');
+        try {
+            // 載入初始場景
+            await this.loadScene('S001');
+            // 初始化變數顯示
+            gameVars.updateUI();
+            // 綁定按鈕事件
+            this.bindButtons();
+        } catch (error) {
+            console.error('Error during initialization:', error);
+        }
     }
     
     bindButtons() {
