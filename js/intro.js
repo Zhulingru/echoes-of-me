@@ -6,6 +6,10 @@ class IntroSequence {
             {
                 image: 'assets/images/intro/memory year.png',
                 text: '在2157年，人類的記憶已經可以被數據化...'
+            },
+            {
+                image: 'assets/images/intro/language break.png',
+                text: '隨著科技進步，語言和意識的界限越來越模糊...'
             }
             // 待添加更多幻燈片
         ];
@@ -30,7 +34,19 @@ class IntroSequence {
         this.slides.forEach((slide, index) => {
             const slideDiv = document.createElement('div');
             slideDiv.className = 'intro-slide';
-            slideDiv.style.backgroundImage = `url(${slide.image})`;
+            
+            // 預加載圖片以確保正確顯示
+            const img = new Image();
+            img.onload = () => {
+                slideDiv.style.backgroundImage = `url(${slide.image})`;
+                console.log(`Loaded image: ${slide.image}`);
+            };
+            img.onerror = () => {
+                console.error(`Failed to load image: ${slide.image}`);
+                // 使用純色背景作為備用
+                slideDiv.style.backgroundColor = '#000';
+            };
+            img.src = slide.image;
             
             const textDiv = document.createElement('div');
             textDiv.className = 'intro-text';

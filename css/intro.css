@@ -26,6 +26,7 @@
     transition: opacity 1.5s ease-in-out;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* 文字靠底 */
@@ -39,14 +40,15 @@
 /* 文字內容 */
 .intro-text {
     color: white;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-align: center;
     padding: 0 20%;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    margin-bottom: 4rem;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+    font-weight: bold;
 }
 
 .intro-slide.active .intro-text {
