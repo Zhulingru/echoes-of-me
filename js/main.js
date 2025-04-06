@@ -29,10 +29,6 @@ class Game {
             // 檢查 DOM 元素
             this.checkDomElements();
             
-            // 載入初始場景
-            console.log('Loading initial scene: S001');
-            await this.loadScene('S001');
-            
             // 初始化變數顯示
             console.log('Updating UI with initial variables');
             gameVars.updateUI();
@@ -40,6 +36,10 @@ class Game {
             // 綁定按鈕事件
             console.log('Binding buttons');
             this.bindButtons();
+            
+            // 載入初始場景
+            console.log('Loading initial scene: S001');
+            await this.loadScene('S001');
             
             console.log('Game initialization complete');
         } catch (error) {
@@ -80,7 +80,15 @@ class Game {
     
     switchMode(mode) {
         console.log(`Switching to ${mode} mode`);
-        // TODO: 實現模式切換邏輯
+        if (mode === 'explore') {
+            console.log('進入探索模式');
+            if (window.explorationSystem) {
+                window.explorationSystem.showExplorationMenu();
+            }
+        } else if (mode === 'battle') {
+            console.log('進入戰鬥模式 - 尚未實現');
+            // TODO: 實現戰鬥系統
+        }
     }
     
     openMemoryList() {
