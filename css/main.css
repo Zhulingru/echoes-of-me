@@ -295,4 +295,35 @@ body {
         filter: hue-rotate(0deg);
         transform: translate(0);
     }
+}
+
+/* 底部按鈕樣式 */
+.action-buttons {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+}
+
+.action-button {
+    padding: 12px 0;
+    width: 120px;  /* 較窄的寬度 */
+    background-color: var(--secondary-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.action-button:hover {
+    background-color: var(--accent-color-dim);
+    box-shadow: 0 0 10px var(--accent-color);
 } 

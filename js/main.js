@@ -1,14 +1,24 @@
 class Game {
     constructor() {
+        console.log('Game constructor initialized');
         this.currentScene = null;
         this.sceneContainer = document.getElementById('scene-container');
+        if (!this.sceneContainer) {
+            console.error('Scene container not found!');
+        }
+        
         this.loadedScenes = {};
         this.loadedMemories = {};
         
         // 確保 DOM 完全加載後再初始化
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.init());
+            console.log('Document still loading, waiting for DOMContentLoaded');
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('DOMContentLoaded fired, initializing game');
+                this.init();
+            });
         } else {
+            console.log('Document already loaded, initializing immediately');
             this.init();
         }
     }
@@ -16,15 +26,37 @@ class Game {
     async init() {
         console.log('Game initializing...');
         try {
+            // 檢查 DOM 元素
+            this.checkDomElements();
+            
             // 載入初始場景
+            console.log('Loading initial scene: S001');
             await this.loadScene('S001');
+            
             // 初始化變數顯示
+            console.log('Updating UI with initial variables');
             gameVars.updateUI();
+            
             // 綁定按鈕事件
+            console.log('Binding buttons');
             this.bindButtons();
+            
+            console.log('Game initialization complete');
         } catch (error) {
             console.error('Error during initialization:', error);
         }
+    }
+    
+    checkDomElements() {
+        const dialogBox = document.getElementById('dialog-box');
+        const choicesContainer = document.getElementById('choices-container');
+        const statusBar = document.getElementById('status-bar');
+        
+        if (!dialogBox) console.error('Dialog box not found!');
+        if (!choicesContainer) console.error('Choices container not found!');
+        if (!statusBar) console.error('Status bar not found!');
+        
+        console.log('DOM elements check complete');
     }
     
     bindButtons() {
@@ -277,7 +309,6 @@ class Game {
     }
 }
 
-// 當文檔載入完成後初始化遊戲
-document.addEventListener('DOMContentLoaded', () => {
-    window.game = new Game();
-}); 
+// 創建全局遊戲實例
+console.log('Creating global game instance');
+window.game = new Game(); 
