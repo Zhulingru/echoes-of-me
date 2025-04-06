@@ -95,20 +95,24 @@ class ExplorationSystem {
         backButton.textContent = '返回';
         backButton.className = 'exploration-back-btn';
         backButton.onclick = () => {
-            const container = document.querySelector('.exploration-container');
-            if (container) {
-                // 先將探索介面淡出
-                container.style.transition = 'opacity 0.3s ease';
-                container.style.opacity = '0';
-                
-                // 等待淡出動畫完成後再移除介面並顯示原場景
-                setTimeout(() => {
-                    container.remove();
-                    // 返回當前場景
-                    if (window.game.currentScene) {
-                        window.game.renderScene();
-                    }
-                }, 300);
+            // 立即移除所有探索相關的介面
+            const containers = [
+                '.exploration-container',
+                '.exploration-interface-container',
+                '.exploration-result-container',
+                '.exploration-message'
+            ];
+            
+            containers.forEach(selector => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.remove();
+                }
+            });
+            
+            // 立即返回當前場景
+            if (window.game.currentScene) {
+                window.game.renderScene();
             }
         };
         menuContainer.appendChild(backButton);
