@@ -233,6 +233,7 @@ body {
     opacity: 0;
     z-index: 100;
     transition: opacity 1s ease;
+    margin-top: -50px; /* 向上移動50px */
 }
 
 .story-text {
