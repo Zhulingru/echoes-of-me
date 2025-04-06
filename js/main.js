@@ -311,4 +311,62 @@ class Game {
 
 // 創建全局遊戲實例
 console.log('Creating global game instance');
-window.game = new Game(); 
+window.game = new Game();
+
+// 背景音樂控制
+function setupMusicControl() {
+    // 創建音樂控制按鈕
+    const musicBtn = document.createElement('button');
+    musicBtn.id = 'music-control-btn';
+    musicBtn.innerHTML = '🔊'; // 初始為有聲圖標
+    musicBtn.style.position = 'fixed';
+    musicBtn.style.bottom = '10px';
+    musicBtn.style.left = '10px';
+    musicBtn.style.zIndex = '1000';
+    musicBtn.style.background = 'rgba(0, 0, 0, 0.5)';
+    musicBtn.style.color = 'white';
+    musicBtn.style.border = '1px solid #666';
+    musicBtn.style.borderRadius = '50%';
+    musicBtn.style.width = '40px';
+    musicBtn.style.height = '40px';
+    musicBtn.style.fontSize = '20px';
+    musicBtn.style.cursor = 'pointer';
+    musicBtn.style.display = 'flex';
+    musicBtn.style.alignItems = 'center';
+    musicBtn.style.justifyContent = 'center';
+    
+    // 設置音樂開關狀態
+    let musicOn = true;
+    
+    // 添加點擊事件
+    musicBtn.addEventListener('click', function() {
+        const bgmPlayer = document.getElementById('bgm-player');
+        
+        if (musicOn) {
+            // 靜音
+            if (bgmPlayer) {
+                // 保存當前音量以便恢復
+                bgmPlayer.dataset.lastVolume = bgmPlayer.volume;
+                bgmPlayer.volume = 0;
+            }
+            musicBtn.innerHTML = '🔇';
+            musicOn = false;
+        } else {
+            // 取消靜音
+            if (bgmPlayer) {
+                // 恢復之前的音量或設為默認值
+                const lastVolume = bgmPlayer.dataset.lastVolume || 0.4;
+                bgmPlayer.volume = parseFloat(lastVolume);
+            }
+            musicBtn.innerHTML = '🔊';
+            musicOn = true;
+        }
+    });
+    
+    document.body.appendChild(musicBtn);
+}
+
+// 當文檔加載完成後設置音樂控制
+document.addEventListener('DOMContentLoaded', function() {
+    setupMusicControl();
+}); 

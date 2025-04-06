@@ -324,8 +324,53 @@ class IntroSequence {
             gameContainer.style.display = 'block';
         }
         
+        // 播放主遊戲背景音樂
+        this.playBackgroundMusic();
+        
         console.log('開場動畫結束，遊戲開始');
         // 這裡可以添加開始遊戲的代碼
+    }
+    
+    playBackgroundMusic() {
+        // 創建新的音樂播放器
+        const bgMusic = new Audio('assets/music/background.mp3');
+        bgMusic.loop = true; // 設置循環播放
+        bgMusic.volume = 0; // 初始音量為0，然後淡入
+        
+        // 設置 ID 以便後續控制
+        bgMusic.id = 'bgm-player';
+        
+        // 將音樂元素添加到 DOM 中，以便全局訪問
+        document.body.appendChild(bgMusic);
+        
+        // 加載並播放
+        try {
+            const playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    console.log('主遊戲背景音樂開始播放');
+                    
+                    // 淡入音樂效果
+                    let currentVolume = 0;
+                    const targetVolume = 0.4; // 背景音樂音量稍低一些
+                    const fadeInterval = setInterval(() => {
+                        currentVolume += 0.02; // 更緩慢的淡入
+                        if (currentVolume >= targetVolume) {
+                            bgMusic.volume = targetVolume;
+                            clearInterval(fadeInterval);
+                        } else {
+                            bgMusic.volume = currentVolume;
+                        }
+                    }, 100);
+                    
+                }).catch(err => {
+                    console.error('主遊戲背景音樂播放失敗:', err);
+                });
+            }
+        } catch (e) {
+            console.error('主遊戲背景音樂播放錯誤:', e);
+        }
     }
 }
 
