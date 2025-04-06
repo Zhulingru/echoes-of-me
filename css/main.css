@@ -345,10 +345,10 @@ body {
 /* 底部按鈕樣式 */
 .action-buttons {
     position: absolute;
-    top: 180px; /* 放在左上角狀態欄下方 */
-    left: 20px; /* 與狀態欄左對齊 */
+    top: 180px;
+    left: 20px;
     display: flex;
-    flex-direction: column; /* 改為垂直排列 */
+    flex-direction: column;
     gap: 10px;
     z-index: 10;
 }
