@@ -1,0 +1,27 @@
+{
+    "id": "S003",
+    "name": "數據花園",
+    "background": "assets/images/scene/S003.png",
+    "speaker": null,
+    "dialog": "無數的數據流在空中飄浮，形成一片絢麗的花園。\n\n每一朵花都是一段記憶，每一片葉子都是一個想法。",
+    "choices": [
+        {
+            "id": "CH006",
+            "text": "觸摸最近的花朵",
+            "effects": { "joy": 1, "memory": 1 },
+            "next": "M002"
+        },
+        {
+            "id": "CH007",
+            "text": "觀察整個花園",
+            "effects": { "stable": 1 },
+            "next": "S004"
+        },
+        {
+            "id": "CH008",
+            "text": "進入探索模式",
+            "effects": { "memory": 1 },
+            "next": null
+        }
+    ]
+} 

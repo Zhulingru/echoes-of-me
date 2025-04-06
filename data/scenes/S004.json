@@ -1,0 +1,27 @@
+{
+    "id": "S004",
+    "name": "記憶之海",
+    "background": "assets/images/scene/S004.png",
+    "speaker": null,
+    "dialog": "一片由記憶組成的海洋在你面前展開。\n\n波濤中閃爍著無數的片段，有些清晰，有些模糊。",
+    "choices": [
+        {
+            "id": "CH009",
+            "text": "潛入海中",
+            "effects": { "memory": 2, "stable": -1 },
+            "next": "M003"
+        },
+        {
+            "id": "CH010",
+            "text": "在岸邊觀察",
+            "effects": { "stable": 1 },
+            "next": "S005"
+        },
+        {
+            "id": "CH011",
+            "text": "進入探索模式",
+            "effects": { "memory": 1 },
+            "next": null
+        }
+    ]
+} 

@@ -1,0 +1,27 @@
+{
+    "id": "S005",
+    "name": "核心空間",
+    "background": "assets/images/scene/S005.png",
+    "speaker": null,
+    "dialog": "你來到了一個充滿能量的空間。\n\n這裡似乎是整個系統的核心，無數的數據流在這裡交匯。",
+    "choices": [
+        {
+            "id": "CH012",
+            "text": "觸碰核心",
+            "effects": { "memory": 2, "stable": -2 },
+            "next": "M004"
+        },
+        {
+            "id": "CH013",
+            "text": "觀察周圍",
+            "effects": { "stable": 1 },
+            "next": "S001"
+        },
+        {
+            "id": "CH014",
+            "text": "進入探索模式",
+            "effects": { "memory": 1 },
+            "next": null
+        }
+    ]
+} 
