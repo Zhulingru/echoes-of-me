@@ -1,19 +1,19 @@
 class GameVariables {
     constructor() {
         this.variables = {
-            anger: 0,
-            stable: 0,
-            block: 0
+            emotion: 7,  // 情緒值
+            stable: 3,   // 穩定
+            block: 0     // 封閉
         };
         
         this.limits = {
-            anger: 10,
+            emotion: 10,
             stable: 10,
             block: 10
         };
 
         this.labels = {
-            anger: "憤怒",
+            emotion: "情緒值",
             stable: "穩定",
             block: "封閉"
         };
@@ -36,7 +36,7 @@ class GameVariables {
 
     // 觸發更新效果
     triggerUpdateEffect(name, oldValue, newValue) {
-        const statusBar = document.querySelector(`#${name}-bar .status-bar-fill`);
+        const statusBar = document.querySelector(`#${name}-bar`);
         if (statusBar) {
             // 添加閃爍效果
             statusBar.classList.add('update-flash');
@@ -61,8 +61,8 @@ class GameVariables {
                 .map(([name, value]) => `
                     <div class="status-item" id="${name}-container">
                         <div class="status-label">${this.labels[name]}</div>
-                        <div class="status-bar" id="${name}-bar">
-                            <div class="status-bar-fill" style="width: ${(value / this.limits[name]) * 100}%"></div>
+                        <div class="status-bar">
+                            <div class="status-bar-fill" id="${name}-bar" style="width: ${(value / this.limits[name]) * 100}%"></div>
                         </div>
                         <div class="status-value">${value}</div>
                     </div>
@@ -75,18 +75,24 @@ class GameVariables {
                 corner.className = `cyber-corner ${position}`;
                 statusBar.appendChild(corner);
             });
+
+            // 同時更新健康/生命值
+            const healthBar = document.getElementById('health-bar');
+            if (healthBar) {
+                healthBar.style.width = '100%';
+            }
         }
     }
 
     // 檢查觸發條件
     checkTriggers() {
-        // 檢查憤怒值
-        if (this.variables.anger >= 3) {
+        // 檢查情緒值
+        if (this.variables.emotion >= 5) {
             this.triggerMemory('M001');
         }
 
         // 檢查穩定度
-        if (this.variables.stable < 0) {
+        if (this.variables.stable < 2) {
             this.triggerChaos();
         }
 
@@ -96,7 +102,7 @@ class GameVariables {
         }
 
         // 檢查複合條件
-        if (this.variables.anger >= 4 && this.variables.block >= 2) {
+        if (this.variables.emotion >= 8 && this.variables.block >= 2) {
             this.triggerMemory('M003');
         }
     }
