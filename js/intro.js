@@ -22,6 +22,7 @@ class IntroSequence {
         ];
         
         this.loadedImages = 0;
+        this.audio = null;
         this.preloadImages();
     }
 
@@ -45,6 +46,9 @@ class IntroSequence {
         loadingContainer.style.zIndex = '2000';
         loadingContainer.textContent = '正在載入開場動畫...';
         document.body.appendChild(loadingContainer);
+
+        // 預加載音樂
+        this.preloadAudio('assets/music/echoes music.mp3');
 
         // 預加載所有圖片
         this.slides.forEach((slide, index) => {
@@ -81,6 +85,51 @@ class IntroSequence {
         });
     }
     
+    preloadAudio(audioPath) {
+        this.audio = new Audio(audioPath);
+        this.audio.preload = 'auto';
+        this.audio.loop = true;
+        this.audio.volume = 0.6; // 音量設置為60%
+        
+        // 加載音樂文件
+        this.audio.load();
+        console.log('開始加載背景音樂');
+        
+        this.audio.addEventListener('canplaythrough', () => {
+            console.log('背景音樂加載完成');
+        });
+        
+        this.audio.addEventListener('error', (e) => {
+            console.error('背景音樂加載失敗:', e);
+        });
+    }
+    
+    playAudio() {
+        if (this.audio) {
+            // 嘗試播放，並處理可能的錯誤
+            try {
+                const playPromise = this.audio.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('背景音樂開始播放');
+                    }).catch(err => {
+                        console.error('背景音樂播放失敗:', err);
+                    });
+                }
+            } catch (e) {
+                console.error('音樂播放出現異常:', e);
+            }
+        }
+    }
+    
+    stopAudio() {
+        if (this.audio) {
+            this.audio.pause();
+            this.audio.currentTime = 0;
+        }
+    }
+    
     initIntro() {
         // 創建開場動畫容器
         const introContainer = document.createElement('div');
@@ -111,6 +160,9 @@ class IntroSequence {
         
         // 添加 intro-playing 類到 body
         document.body.classList.add('intro-playing');
+        
+        // 播放背景音樂
+        this.playAudio();
         
         // 開始播放幻燈片
         setTimeout(() => this.showSlide(0), 500);
@@ -143,6 +195,9 @@ class IntroSequence {
             clearTimeout(this.timer);
         }
         
+        // 停止音樂
+        this.stopAudio();
+        
         this.endIntro();
     }
     
@@ -150,6 +205,18 @@ class IntroSequence {
         const introContainer = document.getElementById('intro-container');
         if (introContainer) {
             introContainer.classList.add('fade-out');
+            
+            // 淡出音樂
+            if (this.audio) {
+                const fadeInterval = setInterval(() => {
+                    if (this.audio.volume > 0.05) {
+                        this.audio.volume -= 0.05;
+                    } else {
+                        clearInterval(fadeInterval);
+                        this.stopAudio();
+                    }
+                }, 100);
+            }
             
             // 動畫結束後移除元素
             setTimeout(() => {
