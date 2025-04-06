@@ -377,22 +377,28 @@ body {
     position: fixed;
     top: 20px;
     right: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 10px;
+    background: var(--dialog-bg);
+    padding: 10px 15px;
     border-radius: 5px;
     border: 1px solid var(--accent-color);
-    color: white;
+    color: var(--text-color);
     z-index: 1000;
     display: flex;
     align-items: center;
     gap: 10px;
+    box-shadow: 0 0 10px var(--accent-color-dim);
+}
+
+#volume-control label {
+    font-size: 0.9em;
+    color: var(--accent-color);
 }
 
 #volume-slider {
     width: 100px;
     height: 4px;
     -webkit-appearance: none;
-    background: var(--accent-color-dim);
+    background: var(--secondary-color);
     outline: none;
     border-radius: 2px;
     cursor: pointer;
@@ -405,6 +411,7 @@ body {
     background: var(--accent-color);
     border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 0 5px var(--accent-color);
 }
 
 #volume-slider::-moz-range-thumb {
@@ -414,4 +421,31 @@ body {
     border-radius: 50%;
     cursor: pointer;
     border: none;
+    box-shadow: 0 0 5px var(--accent-color);
+}
+
+#volume-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    background: var(--secondary-color);
+    border-radius: 2px;
+}
+
+#volume-slider::-moz-range-track {
+    height: 4px;
+    background: var(--secondary-color);
+    border-radius: 2px;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    #volume-control {
+        top: auto;
+        bottom: 20px;
+        right: 20px;
+        padding: 8px 12px;
+    }
+    
+    #volume-slider {
+        width: 80px;
+    }
 } 
