@@ -10,23 +10,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* 防止滾動 */
 }
 
 /* 隱藏主遊戲容器 */
 .intro-playing #game-container {
-    display: none;
+    display: none !important; /* 強制隱藏 */
 }
 
 /* 幻燈片 */
 .intro-slide {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
     transition: opacity 1.5s ease-in-out;
-    background-size: cover;
+    background-size: contain; /* 改為 contain 確保完整顯示圖片 */
     background-position: center;
     background-repeat: no-repeat;
+    background-color: black; /* 背景為黑色 */
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* 文字靠底 */
@@ -35,6 +39,7 @@
 
 .intro-slide.active {
     opacity: 1;
+    z-index: 1001; /* 確保活動幻燈片在最上層 */
 }
 
 /* 文字內容 */
@@ -49,6 +54,9 @@
     transform: translateY(20px);
     transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
     font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5); /* 文字背景半透明黑色 */
+    padding: 15px;
+    border-radius: 5px;
 }
 
 .intro-slide.active .intro-text {
@@ -62,16 +70,17 @@
     bottom: 20px;
     right: 20px;
     padding: 8px 16px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     border: 1px solid white;
     border-radius: 4px;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 1002; /* 確保按鈕在最上層 */
+    font-size: 1rem;
 }
 
 #skip-intro:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* 淡出動畫 */

@@ -10,11 +10,75 @@ class IntroSequence {
             {
                 image: 'assets/images/intro/language break.png',
                 text: '隨著科技進步，語言和意識的界限越來越模糊...'
+            },
+            {
+                image: 'assets/images/intro/echoes system.png',
+                text: 'ECHOES系統讓我們可以訪問那些遺失的記憶片段...'
+            },
+            {
+                image: 'assets/images/intro/Mira looks.png',
+                text: '而我，米拉，則負責引導你進入自己的記憶深處...'
             }
-            // 待添加更多幻燈片
         ];
         
-        this.initIntro();
+        this.loadedImages = 0;
+        this.preloadImages();
+    }
+
+    preloadImages() {
+        const totalImages = this.slides.length;
+        console.log(`開始預加載 ${totalImages} 張圖片`);
+        
+        // 創建一個暫時容器來顯示加載信息
+        const loadingContainer = document.createElement('div');
+        loadingContainer.id = 'loading-container';
+        loadingContainer.style.position = 'fixed';
+        loadingContainer.style.top = '0';
+        loadingContainer.style.left = '0';
+        loadingContainer.style.width = '100vw';
+        loadingContainer.style.height = '100vh';
+        loadingContainer.style.backgroundColor = 'black';
+        loadingContainer.style.color = 'white';
+        loadingContainer.style.display = 'flex';
+        loadingContainer.style.justifyContent = 'center';
+        loadingContainer.style.alignItems = 'center';
+        loadingContainer.style.zIndex = '2000';
+        loadingContainer.textContent = '正在載入開場動畫...';
+        document.body.appendChild(loadingContainer);
+
+        // 預加載所有圖片
+        this.slides.forEach((slide, index) => {
+            const img = new Image();
+            
+            img.onload = () => {
+                this.loadedImages++;
+                console.log(`圖片 ${index + 1}/${totalImages} 已加載: ${slide.image}`);
+                loadingContainer.textContent = `正在載入開場動畫... ${this.loadedImages}/${totalImages}`;
+                
+                // 所有圖片加載完成後開始動畫
+                if (this.loadedImages === totalImages) {
+                    console.log('所有圖片加載完成，開始動畫');
+                    loadingContainer.remove();
+                    this.initIntro();
+                }
+            };
+            
+            img.onerror = (err) => {
+                console.error(`圖片加載失敗 ${slide.image}:`, err);
+                this.loadedImages++;
+                loadingContainer.textContent = `正在載入開場動畫... ${this.loadedImages}/${totalImages} (錯誤)`;
+                
+                // 即使有錯誤也繼續嘗試啟動動畫
+                if (this.loadedImages === totalImages) {
+                    console.log('圖片加載完成但有錯誤，嘗試開始動畫');
+                    loadingContainer.remove();
+                    this.initIntro();
+                }
+            };
+            
+            // 開始加載圖片
+            img.src = slide.image;
+        });
     }
     
     initIntro() {
@@ -34,19 +98,8 @@ class IntroSequence {
         this.slides.forEach((slide, index) => {
             const slideDiv = document.createElement('div');
             slideDiv.className = 'intro-slide';
-            
-            // 預加載圖片以確保正確顯示
-            const img = new Image();
-            img.onload = () => {
-                slideDiv.style.backgroundImage = `url(${slide.image})`;
-                console.log(`Loaded image: ${slide.image}`);
-            };
-            img.onerror = () => {
-                console.error(`Failed to load image: ${slide.image}`);
-                // 使用純色背景作為備用
-                slideDiv.style.backgroundColor = '#000';
-            };
-            img.src = slide.image;
+            // 使用內嵌樣式直接設置背景，確保圖片路徑正確
+            slideDiv.style.backgroundImage = `url("${slide.image}")`;
             
             const textDiv = document.createElement('div');
             textDiv.className = 'intro-text';
@@ -71,6 +124,7 @@ class IntroSequence {
         // 設置當前幻燈片為 active
         if (slides[index]) {
             slides[index].classList.add('active');
+            console.log(`顯示幻燈片 ${index + 1}/${this.slides.length}`);
             
             // 設置下一幻燈片的計時器
             this.currentSlide = index;
