@@ -29,6 +29,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    background-color: var(--primary-color);
 }
 
 .scene-container {
@@ -42,6 +43,7 @@ body {
     background-repeat: no-repeat;
     background-color: var(--primary-color);
     z-index: 1;
+    transition: opacity 0.3s ease;
 }
 
 .scene-content {
@@ -96,13 +98,13 @@ body {
 }
 
 #ui-container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 2;
-    pointer-events: auto;
+    pointer-events: none;
 }
 
 /* 變數狀態顯示 */
@@ -340,7 +342,7 @@ body {
 /* 底部按鈕樣式 */
 .action-buttons {
     position: absolute;
-    top: 180px;
+    top: 230px;
     left: 20px;
     display: flex;
     flex-direction: column;
@@ -462,7 +464,7 @@ body {
 
 #dialog-box {
     position: fixed;
-    bottom: 180px;
+    bottom: 230px;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--dialog-bg);
@@ -476,6 +478,21 @@ body {
     pointer-events: auto;
 }
 
+.dialog-speaker {
+    color: var(--accent-color);
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.dialog-text {
+    line-height: 1.8;
+    font-size: 1.1em;
+    white-space: pre-wrap;
+}
+
 #choices-container {
     position: fixed;
     bottom: 40px;
@@ -484,12 +501,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     width: 80%;
     max-width: 800px;
     z-index: 1000;
     padding: 0 20px;
-    pointer-events: auto;
 }
 
 .choice-button {
@@ -501,18 +517,22 @@ body {
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 16px;
+    font-size: 1.1em;
     border-radius: 4px;
     position: relative;
     overflow: hidden;
     pointer-events: auto;
     user-select: none;
     -webkit-user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .choice-button:hover {
     background-color: rgba(0, 255, 157, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--accent-color-dim);
 }
 
 .choice-button:active {
