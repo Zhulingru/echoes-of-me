@@ -145,8 +145,15 @@ class Game {
     }
 
     async fetchSceneData(sceneId) {
-        // 嘗試從 JSON 檔案載入場景數據
+        // 首先檢查是否有預定義的場景數據
+        if (window.gameScenes && window.gameScenes[sceneId]) {
+            console.log(`Loading scene ${sceneId} from predefined data`);
+            return window.gameScenes[sceneId];
+        }
+
+        // 如果沒有預定義數據，嘗試從 JSON 檔案載入
         try {
+            console.log(`Attempting to load scene ${sceneId} from JSON file`);
             const response = await fetch(`data/scenes/${sceneId}.json`);
             if (response.ok) {
                 return await response.json();
@@ -155,47 +162,16 @@ class Game {
             console.warn(`Failed to load scene from JSON: ${e}`);
         }
         
-        // 如果 JSON 未找到，使用預設數據
-        // 這裡先返回測試數據
-        switch(sceneId) {
-            case 'S002':
-                return {
-                    id: 'S002',
-                    name: '鏡前走廊',
-                    background: 'assets/images/scene/S002.png',
-                    speaker: null,
-                    dialog: '一條昏暗的金屬走廊延伸至遠方，牆上的霓虹燈閃爍著微弱的藍光。\n\n走廊盡頭有一面半透明的鏡子，你看到一個模糊的身影。',
-                    choices: [
-                        {
-                            id: 'CH004-A',
-                            text: '你輕聲說：「妳是我嗎？」',
-                            effects: { anger: 1 },
-                            next: 'M034-A'
-                        },
-                        {
-                            id: 'CH004-B',
-                            text: '「那不是窗外的我嗎……」你低聲喃喃。',
-                            effects: { stable: 1 },
-                            next: 'S001'
-                        },
-                        {
-                            id: 'CH005',
-                            text: '進入探索模式',
-                            effects: { memory: 1 },
-                            next: null
-                        }
-                    ]
-                };
-            default:
-                return {
-                    id: sceneId,
-                    name: '未知場景',
-                    background: 'assets/images/scene/placeholder.png',
-                    speaker: null,
-                    dialog: '場景數據未找到。',
-                    choices: []
-                };
-        }
+        // 如果都沒有找到，返回預設場景
+        console.warn(`No scene data found for ${sceneId}, using default scene`);
+        return {
+            id: sceneId,
+            name: '未知場景',
+            background: './assets/images/scene/placeholder.png',
+            speaker: null,
+            dialog: '場景數據未找到。',
+            choices: []
+        };
     }
 
     renderScene() {
@@ -215,6 +191,9 @@ class Game {
             return;
         }
 
+        console.log('Rendering scene:', this.currentScene.id);
+        console.log('Background path:', this.currentScene.background);
+
         // 清除現有內容
         if (window.dialogSystem) {
             window.dialogSystem.clear();
@@ -228,10 +207,12 @@ class Game {
         
         bgImage.onload = () => {
             console.log('Background image loaded successfully:', this.currentScene.background);
+            console.log('Image dimensions:', bgImage.width, 'x', bgImage.height);
             requestAnimationFrame(() => {
                 // 設置背景
-                this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
+                this.sceneContainer.style.backgroundImage = `url("${this.currentScene.background}")`;
                 this.sceneContainer.style.backgroundColor = 'var(--primary-color)';
+                console.log('Applied background image style:', this.sceneContainer.style.backgroundImage);
                 // 使用 requestAnimationFrame 確保背景設置後再顯示
                 requestAnimationFrame(() => {
                     this.sceneContainer.style.opacity = '1';
@@ -240,7 +221,19 @@ class Game {
         };
         
         bgImage.onerror = (error) => {
-            console.error('Failed to load background image:', this.currentScene.background, error);
+            console.error('Failed to load background image:', this.currentScene.background);
+            console.error('Error details:', error);
+            // 嘗試直接獲取圖片以查看具體錯誤
+            fetch(this.currentScene.background)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    console.log('Image fetch successful');
+                })
+                .catch(e => {
+                    console.error('Image fetch failed:', e);
+                });
             // 設置備用背景顏色
             this.sceneContainer.style.backgroundImage = 'none';
             this.sceneContainer.style.backgroundColor = 'var(--primary-color)';
@@ -248,6 +241,7 @@ class Game {
         };
         
         // 開始加載圖片
+        console.log('Starting to load background image:', this.currentScene.background);
         bgImage.src = this.currentScene.background;
 
         // 確保UI容器可以接收事件
