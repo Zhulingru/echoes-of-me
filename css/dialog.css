@@ -44,10 +44,10 @@
 
 #choices-container {
     position: absolute;
-    bottom: 200px;
+    bottom: 250px;
     left: 50%;
     transform: translateX(-50%);
-    width: 80%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     gap: 10px;
