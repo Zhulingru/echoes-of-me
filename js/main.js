@@ -121,35 +121,6 @@ class Game {
         // 如果 JSON 未找到，使用預設數據
         // 這裡先返回測試數據
         switch(sceneId) {
-            case 'S001':
-                return {
-                    id: 'S001',
-                    name: '記憶引渡站',
-                    background: 'assets/images/memory-station.jpg',
-                    speaker: 'System',
-                    dialog: '系統啟動中...\n\n記憶序列檢測完成。\n\n是否開始回溯？',
-                    choices: [
-                        {
-                            id: 'CH001',
-                            text: '點擊是',
-                            effects: { anger: 1 },
-                            next: 'M001'
-                        },
-                        {
-                            id: 'CH002',
-                            text: '點擊否',
-                            effects: { stable: 2 },
-                            next: null
-                        },
-                        {
-                            id: 'CH003',
-                            text: '觸碰螢幕',
-                            effects: { stable: -1 },
-                            requiresInteraction: true,
-                            next: 'S002'
-                        }
-                    ]
-                };
             case 'S002':
                 return {
                     id: 'S002',
