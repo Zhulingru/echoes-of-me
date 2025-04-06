@@ -64,6 +64,8 @@ class IntroSequence {
                     console.log('所有圖片加載完成，開始動畫');
                     loadingContainer.remove();
                     this.initIntro();
+                    this.playAudio(); // 直接播放音樂，因為用戶已經通過點擊歡迎界面的按鈕授權了
+                    this.showSlide(0); // 直接開始顯示幻燈片
                 }
             };
             
@@ -77,6 +79,8 @@ class IntroSequence {
                     console.log('圖片加載完成但有錯誤，嘗試開始動畫');
                     loadingContainer.remove();
                     this.initIntro();
+                    this.playAudio();
+                    this.showSlide(0);
                 }
             };
             
@@ -89,7 +93,7 @@ class IntroSequence {
         this.audio = new Audio(audioPath);
         this.audio.preload = 'auto';
         this.audio.loop = true;
-        this.audio.volume = 0.6; // 音量設置為60%
+        this.audio.volume = 0;  // 初始音量為0，然後淡入
         
         // 加載音樂文件
         this.audio.load();
@@ -108,8 +112,7 @@ class IntroSequence {
         if (this.audio) {
             // 嘗試播放，並處理可能的錯誤
             try {
-                // 先設置音量為0，然後漸漸增大，製造淡入效果
-                this.audio.volume = 0;
+                // 淡入音樂效果
                 const playPromise = this.audio.play();
                 
                 if (playPromise !== undefined) {
@@ -131,7 +134,6 @@ class IntroSequence {
                         
                     }).catch(err => {
                         console.error('背景音樂播放失敗:', err);
-                        alert('音樂播放失敗，請確保瀏覽器允許自動播放音訊。');
                     });
                 }
             } catch (e) {
@@ -156,26 +158,8 @@ class IntroSequence {
         // 添加跳過按鈕
         const skipButton = document.createElement('button');
         skipButton.id = 'skip-intro';
-        skipButton.textContent = '開始';  // 改為「開始」，用戶點擊後播放音樂和開始動畫
-        
-        skipButton.addEventListener('click', () => {
-            // 隱藏開始按鈕
-            skipButton.style.display = 'none';
-            
-            // 播放音樂
-            this.playAudio();
-            
-            // 顯示真正的跳過按鈕
-            const realSkipButton = document.createElement('button');
-            realSkipButton.id = 'skip-intro';
-            realSkipButton.textContent = '跳過';
-            realSkipButton.addEventListener('click', () => this.skipIntro());
-            introContainer.appendChild(realSkipButton);
-            
-            // 開始播放幻燈片
-            this.showSlide(0);
-        });
-        
+        skipButton.textContent = '跳過';
+        skipButton.addEventListener('click', () => this.skipIntro());
         introContainer.appendChild(skipButton);
         
         // 創建所有幻燈片
@@ -270,13 +254,4 @@ class IntroSequence {
     }
 }
 
-// 頁面加載後啟動開場動畫
-document.addEventListener('DOMContentLoaded', () => {
-    // 檢查是否已經看過開場動畫（可以使用本地存儲）
-    const introShown = localStorage.getItem('introShown');
-    
-    if (!introShown) {
-        new IntroSequence();
-        // localStorage.setItem('introShown', 'true'); // 取消註釋以便只顯示一次
-    }
-}); 
+// 移除舊的頁面載入代碼，現在由 neural-background.js 控制流程 

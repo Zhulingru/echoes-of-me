@@ -1,3 +1,51 @@
+/* p5.js 神經網絡背景 */
+canvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* 歡迎界面 */
+#welcome-container {
+    transition: opacity 1s ease;
+}
+
+#start-button {
+    font-family: monospace, sans-serif;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+}
+
+#start-button::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 60px;
+    border: 2px solid rgba(50, 197, 255, 0.3);
+    animation: pulseGlow 2s infinite;
+    opacity: 0;
+}
+
+@keyframes pulseGlow {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.2;
+    }
+    100% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+}
+
 /* 開場動畫容器 */
 #intro-container {
     position: fixed;
