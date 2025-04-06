@@ -220,9 +220,24 @@ class Game {
             window.dialogSystem.clear();
         }
 
-        // 設置背景
-        this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
-        this.sceneContainer.style.opacity = '1';
+        // 預加載背景圖片
+        const bgImage = new Image();
+        bgImage.onload = () => {
+            console.log('Background image loaded successfully:', this.currentScene.background);
+            // 設置背景
+            this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
+            this.sceneContainer.style.opacity = '1';
+        };
+        
+        bgImage.onerror = (error) => {
+            console.error('Failed to load background image:', this.currentScene.background, error);
+            // 設置備用背景顏色
+            this.sceneContainer.style.backgroundColor = 'var(--primary-color)';
+            this.sceneContainer.style.opacity = '1';
+        };
+        
+        // 開始加載圖片
+        bgImage.src = this.currentScene.background;
 
         // 確保UI容器可以接收事件
         const uiContainer = document.getElementById('ui-container');
