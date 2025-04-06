@@ -390,6 +390,7 @@ body {
 #volume-slider {
     width: 100px;
     height: 4px;
+    appearance: none;
     -webkit-appearance: none;
     background: var(--secondary-color);
     outline: none;
