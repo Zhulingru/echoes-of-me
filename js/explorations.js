@@ -334,15 +334,33 @@ class ExplorationSystem {
             resultContainer.remove();
         }
         
-        // 檢查移動點數
-        if (this.movementPoints <= 0) {
-            // 如果沒有移動點數了，返回當前場景
-            if (window.game && window.game.currentScene) {
-                window.game.renderScene();
+        // 不論移動點數多少，直接返回當前場景
+        if (window.game && window.game.currentScene) {
+            // 清除所有探索相關的介面
+            const containers = [
+                '.exploration-container',
+                '.exploration-interface-container',
+                '.exploration-result-container',
+                '.exploration-message'
+            ];
+            
+            // 先清除對話框內容
+            if (window.dialogSystem) {
+                window.dialogSystem.clear();
             }
-        } else {
-            // 還有移動點數，顯示探索選單
-            this.showExplorationMenu();
+            
+            // 移除所有探索相關的介面
+            containers.forEach(selector => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.remove();
+                }
+            });
+            
+            // 等待一個極短暫的時間確保介面完全移除
+            setTimeout(() => {
+                window.game.renderScene();
+            }, 50);
         }
     }
     
