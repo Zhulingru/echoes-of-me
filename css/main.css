@@ -1,5 +1,5 @@
 :root {
-    /* 更新顏色變數 */
+    /* 基礎顏色變數 */
     --primary-color: #0a0a0f;
     --secondary-color: #1a1a2e;
     --accent-color: #00ff9d;
@@ -155,7 +155,7 @@ body {
     animation: shine 2s infinite;
 }
 
-/* 發光效果動畫 */
+/* 動畫效果 */
 @keyframes shine {
     0% {
         transform: translateX(-100%);
