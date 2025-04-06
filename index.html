@@ -34,6 +34,7 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .scene-display {
@@ -45,6 +46,50 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .story-text {
+      max-width: 80%;
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s, transform 1s;
+    }
+
+    .story-continue {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s, transform 1s, background-color 0.3s;
+    }
+
+    .story-continue:hover {
+      background-color: #45a049;
     }
 
     .player-stats {
@@ -105,6 +150,11 @@
       margin-bottom: 10px;
       line-height: 1.5;
     }
+
+    .fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
   </style>
 </head>
 <body>
@@ -112,6 +162,10 @@
     <div class="main-game-area">
       <div class="scene-display">
         當前場景
+        <div class="story-overlay" id="storyOverlay">
+          <div class="story-text" id="storyText"></div>
+          <button class="story-continue" id="storyContinue">繼續</button>
+        </div>
       </div>
       <div class="action-buttons">
         <button class="action-button">探索</button>
@@ -145,5 +199,57 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // 開場劇情文本
+    const storySequence = [
+      "在這個世界裡，記憶就是一切...",
+      "但是有一天，你發現自己的記憶開始消散...",
+      "為了找回失去的記憶碎片，你必須探索這個世界的每個角落...",
+      "在旅程中，你的情緒將會影響你看待世界的方式...",
+      "準備好開始你的記憶之旅了嗎？"
+    ];
+
+    let currentStoryIndex = 0;
+    const storyOverlay = document.getElementById('storyOverlay');
+    const storyText = document.getElementById('storyText');
+    const storyContinue = document.getElementById('storyContinue');
+
+    // 開始顯示劇情
+    function startStory() {
+      storyOverlay.classList.add('fade-in');
+      showNextStoryText();
+    }
+
+    // 顯示下一段劇情文本
+    function showNextStoryText() {
+      if (currentStoryIndex < storySequence.length) {
+        storyText.style.opacity = 0;
+        storyText.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          storyText.textContent = storySequence[currentStoryIndex];
+          storyText.classList.add('fade-in');
+          storyContinue.classList.add('fade-in');
+        }, 500);
+        
+        currentStoryIndex++;
+      } else {
+        // 劇情結束，隱藏覆蓋層
+        storyOverlay.style.opacity = 0;
+        setTimeout(() => {
+          storyOverlay.style.display = 'none';
+        }, 1000);
+      }
+    }
+
+    // 綁定繼續按鈕事件
+    storyContinue.addEventListener('click', showNextStoryText);
+
+    // 頁面加載後開始顯示劇情
+    window.addEventListener('load', () => {
+      setTimeout(startStory, 1000);
+    });
+  </script>
 </body>
 </html>
