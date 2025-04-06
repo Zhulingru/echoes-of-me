@@ -2,26 +2,26 @@
     "id": "S002",
     "name": "鏡前走廊",
     "background": "assets/images/scene/S002.png",
-    "speaker": null,
-    "dialog": "一條昏暗的金屬走廊延伸至遠方，牆上的霓虹燈閃爍著微弱的藍光。\n\n走廊盡頭有一面半透明的鏡子，你看到一個模糊的身影。",
+    "speaker": "Mira",
+    "dialog": "你還記得……為什麼選這段記憶嗎？\n\n每個鏡子都映出不同版本的你，但哪一個才是真實的？",
     "choices": [
         {
             "id": "CH004-A",
-            "text": "你輕聲說：「妳是我嗎？」",
-            "effects": { "anger": 1 },
+            "text": "點頭",
+            "effects": { "stable": 1, "block": -1 },
             "next": "M034-A"
         },
         {
             "id": "CH004-B",
-            "text": "「那不是窗外的我嗎……」你低聲喃喃。",
-            "effects": { "stable": 1 },
-            "next": "S001"
+            "text": "沉默",
+            "effects": { "block": 1 },
+            "next": "S003"
         },
         {
             "id": "CH005",
-            "text": "進入探索模式",
-            "effects": { "memory": 1 },
-            "next": null
+            "text": "搖頭",
+            "effects": { "anger": 1, "stable": -1 },
+            "next": "S003"
         }
     ]
 } 

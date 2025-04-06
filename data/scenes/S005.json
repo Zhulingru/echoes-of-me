@@ -1,27 +1,27 @@
 {
     "id": "S005",
-    "name": "核心空間",
+    "name": "角色初始化模擬艙",
     "background": "assets/images/scene/S005.png",
-    "speaker": null,
-    "dialog": "你來到了一個充滿能量的空間。\n\n這裡似乎是整個系統的核心，無數的數據流在這裡交匯。",
+    "speaker": "Mira",
+    "dialog": "歡迎來到角色初始化模擬艙。\n\n請選擇三句描述來定義你的存在主張。\n\n注意：選擇完成後才會揭示完整語意。",
     "choices": [
         {
             "id": "CH012",
-            "text": "觸碰核心",
-            "effects": { "memory": 2, "stable": -2 },
+            "text": "「我選擇...」",
+            "effects": { "stable": 1 },
             "next": "M004"
         },
         {
             "id": "CH013",
-            "text": "觀察周圍",
-            "effects": { "stable": 1 },
-            "next": "S001"
+            "text": "「我拒絕...」",
+            "effects": { "anger": 1 },
+            "next": "M004"
         },
         {
             "id": "CH014",
-            "text": "進入探索模式",
-            "effects": { "memory": 1 },
-            "next": null
+            "text": "「我懷疑...」",
+            "effects": { "block": 1 },
+            "next": "M004"
         }
     ]
 } 

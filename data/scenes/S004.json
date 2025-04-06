@@ -1,27 +1,27 @@
 {
     "id": "S004",
-    "name": "記憶之海",
+    "name": "反射空間",
     "background": "assets/images/scene/S004.png",
-    "speaker": null,
-    "dialog": "一片由記憶組成的海洋在你面前展開。\n\n波濤中閃爍著無數的片段，有些清晰，有些模糊。",
+    "speaker": "Mira",
+    "dialog": "他們也選擇了你現在的選擇。\n\n每一個失敗者都曾站在這裡，做出相似的決定。\n\n你想怎麼處理這些過去的選擇？",
     "choices": [
         {
             "id": "CH009",
-            "text": "潛入海中",
-            "effects": { "memory": 2, "stable": -1 },
+            "text": "刪除過去的選擇紀錄",
+            "effects": { "block": 2, "stable": -1 },
             "next": "M003"
         },
         {
             "id": "CH010",
-            "text": "在岸邊觀察",
-            "effects": { "stable": 1 },
+            "text": "保留作為比較資料",
+            "effects": { "stable": 1, "block": -1 },
             "next": "S005"
         },
         {
             "id": "CH011",
-            "text": "進入探索模式",
-            "effects": { "memory": 1 },
-            "next": null
+            "text": "質疑這些選擇的真實性",
+            "effects": { "anger": 1, "block": 1 },
+            "next": "S005"
         }
     ]
 } 
