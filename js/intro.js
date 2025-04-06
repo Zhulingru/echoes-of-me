@@ -207,13 +207,13 @@ class IntroSequence {
             slides[index].classList.add('active');
             console.log(`顯示幻燈片 ${index + 1}/${this.slides.length}`);
             
-            // 設置下一幻燈片的計時器 - 每張圖片顯示25秒
+            // 設置下一幻燈片的計時器 - 每張圖片顯示15秒
             this.currentSlide = index;
             if (index < this.slides.length - 1) {
-                this.timer = setTimeout(() => this.showSlide(index + 1), 25000);
+                this.timer = setTimeout(() => this.showSlide(index + 1), 15000);
             } else {
-                // 最後一張幻燈片後結束序列 - 也是25秒
-                setTimeout(() => this.endIntro(), 25000);
+                // 最後一張幻燈片後結束序列 - 也是15秒
+                setTimeout(() => this.endIntro(), 15000);
             }
         }
     }
