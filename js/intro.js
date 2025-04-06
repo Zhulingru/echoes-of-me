@@ -4,35 +4,35 @@ class IntroSequence {
         this.currentSlide = 0;
         this.slides = [
             {
-                image: 'assets/images/first pic.png',
+                image: 'assets/images/intro/first pic.png',
                 text: '起初，記憶是混亂的，是人們最私密、最真實的東西。\n然而在某個時代，人類將記憶的主權交出，換取可預測的和平與秩序。'
             },
             {
-                image: 'assets/images/sec pic.png',
+                image: 'assets/images/intro/sec pic.png',
                 text: '每段記憶被歸檔、標籤、過濾，輸入資料庫，接受校準。\n情緒被稀釋，語言被統整，所有人的過去，都被整合為「可被信任的版本」。\n於是，自我不再來自「經歷」，而來自「授權的記憶」。\n你還記得那時候的你嗎？\n不重要，因為「機構」還記得，而且比你更精確。'
             },
             {
-                image: 'assets/images/third pic.png',
+                image: 'assets/images/intro/third pic.png',
                 text: '當語言模組開始故障，一切崩壞也隨之而來。\n人們說出不是自己講過的話，記憶裡出現沒經歷過的場景。\n自我是什麼？是我們說過的話，還是被記錄下來的語句？'
             },
             {
-                image: 'assets/images/fourth pic.png',
+                image: 'assets/images/intro/fourth pic.png',
                 text: '當語意碎裂，記憶錯置，情緒與經驗之間的連結開始瓦解。\n有些人選擇沉默，有些人則開始模仿別人的人生。\n更有些人，成為了「殘響」——無法被校準的回音。\n而你，即將甦醒於這些裂縫之中，說出你從未選擇的語句。'
             },
             {
-                image: 'assets/images/fifth pic.png',
+                image: 'assets/images/intro/fifth pic.png',
                 text: '當主體無法穩定，「備份人格」開始啟用。\nEchoes 計畫由此誕生——將曾存在過的人格，以數據形式保存、重構、觀察。\n在一個深邃的資料核心中，你，是其中一個未完成的人格模組。'
             },
             {
-                image: 'assets/images/sixth pic.png',
+                image: 'assets/images/intro/sixth pic.png',
                 text: '你沒有完整的記憶，只有幾段被切割過的片段。\n你沒有語言權限，只能靜靜等待載入完成。\n你不是某個人，但你曾是某個人，也可能再成為某個人。\n而她——那個站在你甦醒門檻前的身影——正在等待你發聲。'
             },
             {
-                image: 'assets/images/seventh pic.png',
+                image: 'assets/images/intro/seventh pic.png',
                 text: '微光中，你睜開眼。\n面前是一張陌生而熟悉的臉，投影般模糊，語言斷裂如水。\n她沒有名字，卻在你的模組中被標記為「Mira」。\n她凝視你，不帶情緒，卻也不帶敵意，像是在等待某種回應。'
             },
             {
-                image: 'assets/images/eighth pic.png',
+                image: 'assets/images/intro/eighth pic.png',
                 text: '「你還記得……為什麼醒來嗎？」她問。\n你的嘴唇無法動彈，語言系統尚未初始化，\n但你的思緒，卻早已被她的聲音喚醒。\n在你開口之前，你知道：\n這場回音，不只是你的重生，而是一場遊戲的開始。'
             }
         ];
