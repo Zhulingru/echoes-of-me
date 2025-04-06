@@ -191,7 +191,7 @@ function createWelcomeInterface() {
     transitionOverlay.style.backgroundColor = 'black';
     transitionOverlay.style.zIndex = '1500';
     transitionOverlay.style.opacity = '0';
-    transitionOverlay.style.transition = 'opacity 1.5s ease';
+    transitionOverlay.style.transition = 'opacity 2.5s ease';
     document.body.appendChild(transitionOverlay);
     
     // 淡入黑色覆蓋層
@@ -213,10 +213,10 @@ function createWelcomeInterface() {
           // 完全淡出後移除覆蓋層
           setTimeout(() => {
             transitionOverlay.remove();
-          }, 1500);
-        }, 500);
-      }, 1500);
-    }, 100);
+          }, 2500);
+        }, 1000);
+      }, 2500);
+    }, 200);
   });
   
   welcomeContainer.appendChild(startButton);

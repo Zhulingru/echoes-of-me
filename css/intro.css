@@ -129,14 +129,4 @@ canvas {
 
 #skip-intro:hover {
     background-color: rgba(255, 255, 255, 0.3);
-}
-
-/* 淡出動畫 */
-.fade-out {
-    animation: fadeOut 1.5s forwards;
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
 } 

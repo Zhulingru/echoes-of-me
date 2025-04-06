@@ -208,16 +208,22 @@ class IntroSequence {
             clearTimeout(this.timer);
         }
         
-        // 停止音樂
-        this.stopAudio();
+        // 創建過渡效果元素
+        const transitionOverlay = document.createElement('div');
+        transitionOverlay.style.position = 'fixed';
+        transitionOverlay.style.top = '0';
+        transitionOverlay.style.left = '0';
+        transitionOverlay.style.width = '100vw';
+        transitionOverlay.style.height = '100vh';
+        transitionOverlay.style.backgroundColor = 'black';
+        transitionOverlay.style.zIndex = '1500';
+        transitionOverlay.style.opacity = '0';
+        transitionOverlay.style.transition = 'opacity 2s ease';
+        document.body.appendChild(transitionOverlay);
         
-        this.endIntro();
-    }
-    
-    endIntro() {
-        const introContainer = document.getElementById('intro-container');
-        if (introContainer) {
-            introContainer.classList.add('fade-out');
+        // 淡入黑色覆蓋層
+        setTimeout(() => {
+            transitionOverlay.style.opacity = '1';
             
             // 淡出音樂
             if (this.audio) {
@@ -231,15 +237,84 @@ class IntroSequence {
                 }, 100);
             }
             
-            // 動畫結束後移除元素
+            // 完全淡入後
             setTimeout(() => {
-                introContainer.remove();
-                document.body.classList.remove('intro-playing');
+                // 移除開場動畫容器
+                const introContainer = document.getElementById('intro-container');
+                if (introContainer) {
+                    introContainer.remove();
+                    document.body.classList.remove('intro-playing');
+                }
                 
-                // 觸發遊戲初始化
+                // 顯示遊戲容器
                 this.startGame();
-            }, 1500);
-        }
+                
+                // 延遲後淡出覆蓋層
+                setTimeout(() => {
+                    transitionOverlay.style.opacity = '0';
+                    
+                    // 完全淡出後移除覆蓋層
+                    setTimeout(() => {
+                        transitionOverlay.remove();
+                    }, 2000);
+                }, 500);
+            }, 2000);
+        }, 100);
+    }
+    
+    endIntro() {
+        // 創建過渡效果元素
+        const transitionOverlay = document.createElement('div');
+        transitionOverlay.style.position = 'fixed';
+        transitionOverlay.style.top = '0';
+        transitionOverlay.style.left = '0';
+        transitionOverlay.style.width = '100vw';
+        transitionOverlay.style.height = '100vh';
+        transitionOverlay.style.backgroundColor = 'black';
+        transitionOverlay.style.zIndex = '1500';
+        transitionOverlay.style.opacity = '0';
+        transitionOverlay.style.transition = 'opacity 2s ease';
+        document.body.appendChild(transitionOverlay);
+        
+        // 淡入黑色覆蓋層
+        setTimeout(() => {
+            transitionOverlay.style.opacity = '1';
+            
+            // 淡出音樂
+            if (this.audio) {
+                const fadeInterval = setInterval(() => {
+                    if (this.audio.volume > 0.05) {
+                        this.audio.volume -= 0.05;
+                    } else {
+                        clearInterval(fadeInterval);
+                        this.stopAudio();
+                    }
+                }, 100);
+            }
+            
+            // 完全淡入後
+            setTimeout(() => {
+                // 移除開場動畫容器
+                const introContainer = document.getElementById('intro-container');
+                if (introContainer) {
+                    introContainer.remove();
+                    document.body.classList.remove('intro-playing');
+                }
+                
+                // 顯示遊戲容器
+                this.startGame();
+                
+                // 延遲後淡出覆蓋層
+                setTimeout(() => {
+                    transitionOverlay.style.opacity = '0';
+                    
+                    // 完全淡出後移除覆蓋層
+                    setTimeout(() => {
+                        transitionOverlay.remove();
+                    }, 2000);
+                }, 500);
+            }, 2000);
+        }, 100);
     }
     
     startGame() {
