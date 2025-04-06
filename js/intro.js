@@ -108,13 +108,30 @@ class IntroSequence {
         if (this.audio) {
             // 嘗試播放，並處理可能的錯誤
             try {
+                // 先設置音量為0，然後漸漸增大，製造淡入效果
+                this.audio.volume = 0;
                 const playPromise = this.audio.play();
                 
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         console.log('背景音樂開始播放');
+                        
+                        // 淡入音樂
+                        let currentVolume = 0;
+                        const targetVolume = 0.6;
+                        const fadeInterval = setInterval(() => {
+                            currentVolume += 0.05;
+                            if (currentVolume >= targetVolume) {
+                                this.audio.volume = targetVolume;
+                                clearInterval(fadeInterval);
+                            } else {
+                                this.audio.volume = currentVolume;
+                            }
+                        }, 100);
+                        
                     }).catch(err => {
                         console.error('背景音樂播放失敗:', err);
+                        alert('音樂播放失敗，請確保瀏覽器允許自動播放音訊。');
                     });
                 }
             } catch (e) {
@@ -139,8 +156,26 @@ class IntroSequence {
         // 添加跳過按鈕
         const skipButton = document.createElement('button');
         skipButton.id = 'skip-intro';
-        skipButton.textContent = '跳過';
-        skipButton.addEventListener('click', () => this.skipIntro());
+        skipButton.textContent = '開始';  // 改為「開始」，用戶點擊後播放音樂和開始動畫
+        
+        skipButton.addEventListener('click', () => {
+            // 隱藏開始按鈕
+            skipButton.style.display = 'none';
+            
+            // 播放音樂
+            this.playAudio();
+            
+            // 顯示真正的跳過按鈕
+            const realSkipButton = document.createElement('button');
+            realSkipButton.id = 'skip-intro';
+            realSkipButton.textContent = '跳過';
+            realSkipButton.addEventListener('click', () => this.skipIntro());
+            introContainer.appendChild(realSkipButton);
+            
+            // 開始播放幻燈片
+            this.showSlide(0);
+        });
+        
         introContainer.appendChild(skipButton);
         
         // 創建所有幻燈片
@@ -160,12 +195,6 @@ class IntroSequence {
         
         // 添加 intro-playing 類到 body
         document.body.classList.add('intro-playing');
-        
-        // 播放背景音樂
-        this.playAudio();
-        
-        // 開始播放幻燈片
-        setTimeout(() => this.showSlide(0), 500);
     }
     
     showSlide(index) {
