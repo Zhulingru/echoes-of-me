@@ -1,0 +1,58 @@
+#dialog-box {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    padding: 20px;
+    background: var(--dialog-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: 5px;
+    pointer-events: auto;
+}
+
+#choices-container {
+    position: absolute;
+    bottom: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.choice-button {
+    padding: 10px 20px;
+    background: var(--secondary-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.choice-button:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+/* 添加打字機效果的動畫 */
+.typing {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid var(--accent-color);
+    animation: typing 3.5s steps(40, end),
+               blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--accent-color) }
+} 

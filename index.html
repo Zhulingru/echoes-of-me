@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
   <!-- Deploy Timestamp: 2024-04-06 15:55 -->
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echoes of Me</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dialog.css">
   <style>
     * {
       margin: 0;
@@ -158,6 +161,23 @@
   </style>
 </head>
 <body>
+  <div id="game-container">
+    <div id="scene-container">
+      <!-- 場景背景和角色會在這裡 -->
+    </div>
+    <div id="ui-container">
+      <div id="status-bar">
+        <!-- 變數顯示（anger、stable、block）會在這裡 -->
+      </div>
+      <div id="dialog-box">
+        <!-- 對話內容會在這裡 -->
+      </div>
+      <div id="choices-container">
+        <!-- 選項會在這裡 -->
+      </div>
+    </div>
+  </div>
+
   <div class="game-container">
     <div class="main-game-area">
       <div class="scene-display">
@@ -251,5 +271,10 @@
       setTimeout(startStory, 1000);
     });
   </script>
+
+  <!-- Scripts -->
+  <script src="js/variables.js"></script>
+  <script src="js/dialog.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
