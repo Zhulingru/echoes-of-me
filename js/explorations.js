@@ -27,6 +27,17 @@ class ExplorationSystem {
         this.movementPoints = 3; // 每天的移動點數
         this.exploreResults = []; // 儲存探索結果
         
+        this.container = document.createElement('div');
+        this.container.className = 'exploration-container';
+        document.getElementById('game-container').appendChild(this.container);
+        
+        // 創建返回按鈕
+        this.backButton = document.createElement('button');
+        this.backButton.textContent = '返回';
+        this.backButton.className = 'back-button';
+        this.backButton.onclick = () => this.hideExplorationMenu();
+        this.container.appendChild(this.backButton);
+        
         this.bindExplorationButton();
     }
     
@@ -38,6 +49,16 @@ class ExplorationSystem {
     }
     
     showExplorationMenu() {
+        // 添加探索模式激活標記
+        document.body.classList.add('exploration-active');
+        this.container.classList.add('active');
+        
+        // 隱藏對話框和選項
+        const dialogBox = document.getElementById('dialog-box');
+        const choicesContainer = document.getElementById('choices-container');
+        if (dialogBox) dialogBox.style.display = 'none';
+        if (choicesContainer) choicesContainer.style.display = 'none';
+        
         // 清空現有對話和選項
         dialogSystem.clear();
         
@@ -90,25 +111,25 @@ class ExplorationSystem {
         
         menuContainer.appendChild(mapsContainer);
         
-        // 添加返回按鈕
-        const backButton = document.createElement('button');
-        backButton.textContent = '返回';
-        backButton.className = 'exploration-back-btn';
-        backButton.onclick = () => {
-            document.querySelector('.exploration-container').remove();
-            // 返回當前場景
-            if (window.game.currentScene) {
-                window.game.renderScene();
-            }
-        };
-        menuContainer.appendChild(backButton);
-        
         // 創建外層容器並添加到UI
-        const container = document.createElement('div');
-        container.className = 'exploration-container';
-        container.appendChild(menuContainer);
+        this.container.appendChild(menuContainer);
+    }
+    
+    hideExplorationMenu() {
+        // 移除探索模式激活標記
+        document.body.classList.remove('exploration-active');
+        this.container.classList.remove('active');
         
-        document.getElementById('ui-container').appendChild(container);
+        // 恢復對話框和選項的顯示
+        const dialogBox = document.getElementById('dialog-box');
+        const choicesContainer = document.getElementById('choices-container');
+        if (dialogBox) dialogBox.style.display = 'block';
+        if (choicesContainer) choicesContainer.style.display = 'block';
+        
+        // 如果有當前場景，重新渲染
+        if (window.game && window.game.currentScene) {
+            window.game.renderScene();
+        }
     }
     
     selectMap(mapId) {
@@ -124,12 +145,6 @@ class ExplorationSystem {
         
         this.currentMap = mapId;
         const mapData = this.maps[mapId];
-        
-        // 檢查當前UI狀態
-        const existingContainer = document.querySelector('.exploration-container');
-        if (existingContainer) {
-            existingContainer.remove();
-        }
         
         // 顯示地圖
         this.showMap(mapData);
