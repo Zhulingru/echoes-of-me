@@ -20,37 +20,67 @@
     </div>
     
     <div id="ui-container">
-      <div id="scene-title">當前場景</div>
+      <div id="scene-title">記憶引渡站</div>
       
       <div id="status-container">
         <div id="status-bar">
           <div class="status-item">
-            <div class="status-label">情緒值</div>
+            <div class="status-label">憤怒</div>
             <div class="status-bar">
-              <div class="status-bar-fill" id="emotion-bar" style="width: 70%;"></div>
+              <div class="status-bar-fill" id="emotion-bar" style="width: 30%;"></div>
             </div>
+            <div class="status-value">3</div>
           </div>
           <div class="status-item">
-            <div class="status-label">生命值</div>
+            <div class="status-label">穩定</div>
             <div class="status-bar">
-              <div class="status-bar-fill" id="health-bar" style="width: 100%;"></div>
+              <div class="status-bar-fill" id="stable-bar" style="width: 40%;"></div>
             </div>
+            <div class="status-value">10</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">隱絕</div>
+            <div class="status-bar">
+              <div class="status-bar-fill" id="block-bar" style="width: 10%;"></div>
+            </div>
+            <div class="status-value">0</div>
           </div>
         </div>
       </div>
 
       <div id="dialog-box">
-        <!-- 對話內容會在這裡 -->
+        牽絲細期則你的記憶放大了嗎？
       </div>
 
       <div id="choices-container">
-        <!-- 選項會在這裡 -->
+        <button class="choice-button">連結記憶核心</button>
+        <button class="choice-button">抵抗訊號干擾</button>
+        <button class="choice-button">什麼都不做，等待它主動找你</button>
+      </div>
+      
+      <div id="system-message">
+        系統啟動中...
       </div>
 
       <div id="main-buttons">
-        <button class="main-button" onclick="game.explore()">探索</button>
-        <button class="main-button" onclick="game.battle()">戰鬥</button>
-        <button class="main-button" onclick="game.memory()">記憶</button>
+        <button class="main-button" onclick="game.explore()">
+          <svg class="button-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,11.5A1.5,1.5 0 0,1 10.5,10A1.5,1.5 0 0,1 12,8.5A1.5,1.5 0 0,1 13.5,10A1.5,1.5 0 0,1 12,11.5M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z"></path>
+          </svg>
+          探索
+        </button>
+        <button class="main-button" onclick="game.battle()">
+          <svg class="button-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M14.5,17L16.5,17L16.5,5H14.5V17M20,10V19H4V10H8V11H10V10H14V11H16V10H20M9,16H11V12H9V16M20,8H4V5H20V8Z"></path>
+          </svg>
+          戰鬥
+        </button>
+        <button class="main-button" onclick="game.memory()">
+          <svg class="button-icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M13,3V11H21V3M3,21H11V13H3M3,3V11H11V3"></path>
+          </svg>
+          記憶
+        </button>
       </div>
     </div>
   </div>

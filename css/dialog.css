@@ -1,17 +1,16 @@
 #dialog-box {
-    position: absolute;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    padding: 20px;
-    background: var(--dialog-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 5px;
-    pointer-events: auto;
-    box-shadow: 0 0 15px var(--accent-color-dim);
+    position: static;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    min-height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.5em;
+    line-height: 1.6;
     z-index: 1000;
-    min-height: 120px;
 }
 
 .speaker {
@@ -41,24 +40,20 @@
     line-height: 1.6;
     margin-top: 10px;
     position: relative;
+    text-align: center;
 }
 
 #choices-container {
-    position: absolute;
-    bottom: 240px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    pointer-events: auto;
+    position: static;
+    bottom: auto;
+    left: auto;
+    transform: none;
     z-index: 1000;
 }
 
 .choice-button {
-    padding: 8px 20px;
-    background: var(--secondary-color);
+    padding: 1.5vh 20px;
+    background: transparent;
     border: 1px solid var(--accent-color);
     color: var(--text-color);
     border-radius: 5px;
@@ -66,9 +61,8 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    font-family: 'Rajdhani', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 1.2em;
+    text-align: center;
 }
 
 .choice-button::before {
@@ -89,8 +83,6 @@
 
 .choice-button:hover {
     background: var(--accent-color-dim);
-    color: var(--text-color);
-    box-shadow: 0 0 10px var(--accent-color);
 }
 
 .choice-button:hover::before {
