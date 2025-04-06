@@ -7,6 +7,7 @@
   <title>Echoes of Me</title>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/dialog.css">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -163,17 +164,29 @@
 <body>
   <div id="game-container">
     <div id="scene-container">
-      <!-- 場景背景和角色會在這裡 -->
+      <!-- 場景背景會在這裡 -->
     </div>
     <div id="ui-container">
-      <div id="status-bar">
-        <!-- 變數顯示（anger、stable、block）會在這裡 -->
+      <div id="scene-title">當前場景</div>
+      
+      <div id="status-container">
+        <div id="status-bar">
+          <!-- 變數顯示會在這裡 -->
+        </div>
       </div>
+
       <div id="dialog-box">
         <!-- 對話內容會在這裡 -->
       </div>
+
       <div id="choices-container">
         <!-- 選項會在這裡 -->
+      </div>
+
+      <div id="main-buttons">
+        <button class="main-button" onclick="game.explore()">探索</button>
+        <button class="main-button" onclick="game.battle()">戰鬥</button>
+        <button class="main-button" onclick="game.memory()">記憶</button>
       </div>
     </div>
   </div>
