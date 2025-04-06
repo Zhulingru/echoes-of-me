@@ -182,15 +182,12 @@ body {
 
 /* 底部系統消息 */
 #system-message {
-    position: absolute;
-    bottom: 12vh;
-    left: 10%;
-    width: 80%;
+    position: static;
+    width: 60%;
+    margin: 2vh auto 0;
     text-align: center;
     color: rgba(255, 255, 255, 0.7);
     font-size: 1.1em;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0.8vh 0;
     z-index: 40;
 }
