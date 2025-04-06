@@ -103,6 +103,12 @@ class ExplorationSystem {
                 '.exploration-message'
             ];
             
+            // 先清除對話框內容
+            if (window.dialogSystem) {
+                window.dialogSystem.clear();
+            }
+            
+            // 移除所有探索相關的介面
             containers.forEach(selector => {
                 const element = document.querySelector(selector);
                 if (element) {
@@ -110,10 +116,13 @@ class ExplorationSystem {
                 }
             });
             
-            // 立即返回當前場景
-            if (window.game.currentScene) {
-                window.game.renderScene();
-            }
+            // 等待一個極短暫的時間確保介面完全移除
+            setTimeout(() => {
+                // 返回當前場景
+                if (window.game.currentScene) {
+                    window.game.renderScene();
+                }
+            }, 50);
         };
         menuContainer.appendChild(backButton);
         
