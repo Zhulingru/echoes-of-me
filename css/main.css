@@ -130,19 +130,12 @@ body {
     color: var(--accent-color);
 }
 
-.status-bar {
+.status-bar-fill {
     width: 150px;
     height: 8px;
     background: var(--secondary-color);
     border-radius: 4px;
     overflow: hidden;
-    position: relative;
-}
-
-.status-bar-fill {
-    height: 100%;
-    background: var(--accent-color);
-    transition: width 0.3s ease;
     position: relative;
 }
 
@@ -255,7 +248,7 @@ body {
     }
     50% {
         opacity: 1;
-        text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--accent-color);
+        text-shadow: 0 0 20px var(--accent-color);
     }
     100% {
         opacity: 0.5;
@@ -291,7 +284,7 @@ body {
 }
 
 /* 混亂模式效果 */
-.chaos-mode #scene-container {
+.chaos-mode .scene-container {
     animation: glitch 0.5s infinite;
 }
 
@@ -447,5 +440,17 @@ body {
     
     #volume-slider {
         width: 80px;
+    }
+}
+
+/* 無動畫偏好：自動停用所有動畫 */
+@media (prefers-reduced-motion: reduce) {
+    .chaos-mode .scene-container,
+    .glow,
+    .status-bar-fill::after,
+    .memory-loading::after,
+    .update-flash,
+    .significant-change {
+        animation: none !important;
     }
 }
