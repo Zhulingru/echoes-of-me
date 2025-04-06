@@ -8,86 +8,231 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/dialog.css">
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .game-container {
+      display: flex;
+      flex: 1;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .main-game-area {
+      flex: 3;
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .scene-display {
+      flex: 1;
+      background-color: #333;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .story-text {
+      max-width: 80%;
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s, transform 1s;
+    }
+
+    .story-continue {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s, transform 1s, background-color 0.3s;
+    }
+
+    .story-continue:hover {
+      background-color: #45a049;
+    }
+
+    .player-stats {
+      flex: 1;
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .stats-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stat-bar {
+      background-color: #333;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .stat-fill {
+      height: 100%;
+      background-color: #4CAF50;
+      transition: width 0.3s ease;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .action-button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .action-button:hover {
+      background-color: #45a049;
+    }
+
+    .dialogue-area {
+      flex: 1;
+      background-color: #2a2a2a;
+      border-radius: 10px;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .dialogue-text {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .fade-in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
 </head>
 <body>
   <div id="game-container">
     <div id="scene-container">
       <!-- 場景背景會在這裡 -->
-      <div id="story-overlay" class="story-overlay">
-        <div id="story-text" class="story-text"></div>
-        <button id="story-continue" class="story-continue">繼續</button>
-      </div>
     </div>
-    
     <div id="ui-container">
-      <div id="scene-title">記憶引渡站</div>
+      <div id="scene-title">當前場景</div>
       
       <div id="status-container">
         <div id="status-bar">
-          <div class="status-item">
-            <div class="status-label">憤怒</div>
-            <div class="status-bar">
-              <div class="status-bar-fill" id="emotion-bar" style="width: 30%;"></div>
-            </div>
-            <div class="status-value">3</div>
-          </div>
-          <div class="status-item">
-            <div class="status-label">穩定</div>
-            <div class="status-bar">
-              <div class="status-bar-fill" id="stable-bar" style="width: 40%;"></div>
-            </div>
-            <div class="status-value">10</div>
-          </div>
-          <div class="status-item">
-            <div class="status-label">隱絕</div>
-            <div class="status-bar">
-              <div class="status-bar-fill" id="block-bar" style="width: 10%;"></div>
-            </div>
-            <div class="status-value">0</div>
-          </div>
+          <!-- 變數顯示會在這裡 -->
         </div>
       </div>
 
-      <div id="dialog-box" class="no-border">
-        在這個世界裡，記憶就是一切...
+      <div id="dialog-box">
+        <!-- 對話內容會在這裡 -->
       </div>
 
       <div id="choices-container">
-        <button class="choice-button">點擊是</button>
-        <button class="choice-button">點擊否</button>
-        <button class="choice-button">觸碰螢幕</button>
-      </div>
-      
-      <div id="system-message">
-        系統啟動中...
+        <!-- 選項會在這裡 -->
       </div>
 
       <div id="main-buttons">
-        <button class="main-button" onclick="game.explore()">
-          <svg class="button-icon" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,11.5A1.5,1.5 0 0,1 10.5,10A1.5,1.5 0 0,1 12,8.5A1.5,1.5 0 0,1 13.5,10A1.5,1.5 0 0,1 12,11.5M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z"></path>
-          </svg>
-          探索
-        </button>
-        <button class="main-button" onclick="game.battle()">
-          <svg class="button-icon" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M14.5,17L16.5,17L16.5,5H14.5V17M20,10V19H4V10H8V11H10V10H14V11H16V10H20M9,16H11V12H9V16M20,8H4V5H20V8Z"></path>
-          </svg>
-          戰鬥
-        </button>
-        <button class="main-button" onclick="game.memory()">
-          <svg class="button-icon" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M13,3V11H21V3M3,21H11V13H3M3,3V11H11V3"></path>
-          </svg>
-          記憶
-        </button>
+        <button class="main-button" onclick="game.explore()">探索</button>
+        <button class="main-button" onclick="game.battle()">戰鬥</button>
+        <button class="main-button" onclick="game.memory()">記憶</button>
       </div>
     </div>
   </div>
 
-  <script src="js/variables.js"></script>
-  <script src="js/dialog.js"></script>
-  <script src="js/main.js"></script>
+  <div class="game-container">
+    <div class="main-game-area">
+      <div class="scene-display">
+        當前場景
+        <div class="story-overlay" id="storyOverlay">
+          <div class="story-text" id="storyText"></div>
+          <button class="story-continue" id="storyContinue">繼續</button>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button class="action-button">探索</button>
+        <button class="action-button">戰鬥</button>
+        <button class="action-button">記憶</button>
+      </div>
+    </div>
+    
+    <div class="player-stats">
+      <h2>玩家狀態</h2>
+      <div class="stats-container">
+        <div>
+          <label>情緒值</label>
+          <div class="stat-bar">
+            <div class="stat-fill" style="width: 70%"></div>
+          </div>
+        </div>
+        <div>
+          <label>生命值</label>
+          <div class="stat-bar">
+            <div class="stat-fill" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialogue-area">
+      <h2>對話與事件</h2>
+      <div class="dialogue-text">
+        歡迎來到 Echoes of Me...
+      </div>
+    </div>
+  </div>
+
   <script>
     // 開場劇情文本
     const storySequence = [
@@ -99,35 +244,31 @@
     ];
 
     let currentStoryIndex = 0;
-    const storyOverlay = document.getElementById('story-overlay');
-    const storyText = document.getElementById('story-text');
-    const storyContinue = document.getElementById('story-continue');
+    const storyOverlay = document.getElementById('storyOverlay');
+    const storyText = document.getElementById('storyText');
+    const storyContinue = document.getElementById('storyContinue');
 
-    // 顯示開場劇情
-    function showStorySequence() {
-      storyOverlay.style.display = 'flex';
-      setTimeout(() => {
-        storyOverlay.style.opacity = 1;
-        showNextStory();
-      }, 500);
+    // 開始顯示劇情
+    function startStory() {
+      storyOverlay.classList.add('fade-in');
+      showNextStoryText();
     }
 
-    function showNextStory() {
+    // 顯示下一段劇情文本
+    function showNextStoryText() {
       if (currentStoryIndex < storySequence.length) {
-        storyText.textContent = storySequence[currentStoryIndex];
-        storyText.classList.add('fade-in');
+        storyText.style.opacity = 0;
+        storyText.style.transform = 'translateY(20px)';
         
-        if (currentStoryIndex === storySequence.length - 1) {
-          setTimeout(() => {
-            storyContinue.style.display = 'block';
-            storyContinue.classList.add('fade-in');
-          }, 1000);
-        } else {
-          storyContinue.style.display = 'none';
-        }
+        setTimeout(() => {
+          storyText.textContent = storySequence[currentStoryIndex];
+          storyText.classList.add('fade-in');
+          storyContinue.classList.add('fade-in');
+        }, 500);
         
         currentStoryIndex++;
       } else {
+        // 劇情結束，隱藏覆蓋層
         storyOverlay.style.opacity = 0;
         setTimeout(() => {
           storyOverlay.style.display = 'none';
@@ -135,14 +276,18 @@
       }
     }
 
-    // 事件監聽
-    storyContinue.addEventListener('click', showNextStory);
-    storyText.addEventListener('click', showNextStory);
+    // 綁定繼續按鈕事件
+    storyContinue.addEventListener('click', showNextStoryText);
 
-    // 頁面載入後顯示開場劇情
+    // 頁面加載後開始顯示劇情
     window.addEventListener('load', () => {
-      setTimeout(showStorySequence, 1000);
+      setTimeout(startStory, 1000);
     });
   </script>
+
+  <!-- Scripts -->
+  <script src="js/variables.js"></script>
+  <script src="js/dialog.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
