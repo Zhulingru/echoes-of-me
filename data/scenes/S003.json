@@ -1,7 +1,7 @@
 {
     "id": "S003",
     "name": "語義殘層",
-    "background": "assets/images/S003.jpg",
+    "background": "assets/images/scene/S003.png",
     "music": "assets/music/s003.mp3",
     "speaker": "Mira",
     "dialog": "這不是錯誤，這是預設。\n\n兩段記憶重疊在一起，你只能選擇其中一段。\n\n但選擇後，兩段都會消失。",

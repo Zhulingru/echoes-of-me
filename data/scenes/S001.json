@@ -1,7 +1,7 @@
 {
     "id": "S001",
     "name": "記憶引渡站",
-    "background": "assets/images/S001.jpg",
+    "background": "assets/images/scene/S001.png",
     "music": "assets/music/s001.mp3",
     "speaker": "System",
     "dialog": "系統啟動中...\n\n記憶序列檢測完成。\n\n語言模組異常，無法開口。\n\n請從以下三段模糊的記憶中選擇其一：",

@@ -1,7 +1,7 @@
 {
     "id": "S002",
     "name": "鏡前走廊",
-    "background": "assets/images/S002.jpg",
+    "background": "assets/images/scene/S002.png",
     "music": "assets/music/s002.mp3",
     "speaker": "Mira",
     "dialog": "你還記得……為什麼選這段記憶嗎？\n\n每個鏡子都映出不同版本的你，但哪一個才是真實的？",
