@@ -165,13 +165,29 @@
   <div id="game-container">
     <div id="scene-container">
       <!-- 場景背景會在這裡 -->
+      <div id="story-overlay" class="story-overlay">
+        <div id="story-text" class="story-text"></div>
+        <button id="story-continue" class="story-continue">繼續</button>
+      </div>
     </div>
+    
     <div id="ui-container">
       <div id="scene-title">當前場景</div>
       
       <div id="status-container">
         <div id="status-bar">
-          <!-- 變數顯示會在這裡 -->
+          <div class="status-item">
+            <div class="status-label">情緒值</div>
+            <div class="status-bar">
+              <div class="status-bar-fill" id="emotion-bar" style="width: 70%;"></div>
+            </div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">生命值</div>
+            <div class="status-bar">
+              <div class="status-bar-fill" id="health-bar" style="width: 100%;"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -233,6 +249,9 @@
     </div>
   </div>
 
+  <script src="js/variables.js"></script>
+  <script src="js/dialog.js"></script>
+  <script src="js/main.js"></script>
   <script>
     // 開場劇情文本
     const storySequence = [
@@ -244,31 +263,35 @@
     ];
 
     let currentStoryIndex = 0;
-    const storyOverlay = document.getElementById('storyOverlay');
-    const storyText = document.getElementById('storyText');
-    const storyContinue = document.getElementById('storyContinue');
+    const storyOverlay = document.getElementById('story-overlay');
+    const storyText = document.getElementById('story-text');
+    const storyContinue = document.getElementById('story-continue');
 
-    // 開始顯示劇情
-    function startStory() {
-      storyOverlay.classList.add('fade-in');
-      showNextStoryText();
+    // 顯示開場劇情
+    function showStorySequence() {
+      storyOverlay.style.display = 'flex';
+      setTimeout(() => {
+        storyOverlay.style.opacity = 1;
+        showNextStory();
+      }, 500);
     }
 
-    // 顯示下一段劇情文本
-    function showNextStoryText() {
+    function showNextStory() {
       if (currentStoryIndex < storySequence.length) {
-        storyText.style.opacity = 0;
-        storyText.style.transform = 'translateY(20px)';
+        storyText.textContent = storySequence[currentStoryIndex];
+        storyText.classList.add('fade-in');
         
-        setTimeout(() => {
-          storyText.textContent = storySequence[currentStoryIndex];
-          storyText.classList.add('fade-in');
-          storyContinue.classList.add('fade-in');
-        }, 500);
+        if (currentStoryIndex === storySequence.length - 1) {
+          setTimeout(() => {
+            storyContinue.style.display = 'block';
+            storyContinue.classList.add('fade-in');
+          }, 1000);
+        } else {
+          storyContinue.style.display = 'none';
+        }
         
         currentStoryIndex++;
       } else {
-        // 劇情結束，隱藏覆蓋層
         storyOverlay.style.opacity = 0;
         setTimeout(() => {
           storyOverlay.style.display = 'none';
@@ -276,18 +299,14 @@
       }
     }
 
-    // 綁定繼續按鈕事件
-    storyContinue.addEventListener('click', showNextStoryText);
+    // 事件監聽
+    storyContinue.addEventListener('click', showNextStory);
+    storyText.addEventListener('click', showNextStory);
 
-    // 頁面加載後開始顯示劇情
+    // 頁面載入後顯示開場劇情
     window.addEventListener('load', () => {
-      setTimeout(startStory, 1000);
+      setTimeout(showStorySequence, 1000);
     });
   </script>
-
-  <!-- Scripts -->
-  <script src="js/variables.js"></script>
-  <script src="js/dialog.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>
