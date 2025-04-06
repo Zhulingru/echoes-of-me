@@ -220,18 +220,29 @@ class Game {
             window.dialogSystem.clear();
         }
 
+        // 設置初始狀態
+        this.sceneContainer.style.opacity = '0';
+        
         // 預加載背景圖片
         const bgImage = new Image();
+        
         bgImage.onload = () => {
             console.log('Background image loaded successfully:', this.currentScene.background);
-            // 設置背景
-            this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
-            this.sceneContainer.style.opacity = '1';
+            requestAnimationFrame(() => {
+                // 設置背景
+                this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
+                this.sceneContainer.style.backgroundColor = 'var(--primary-color)';
+                // 使用 requestAnimationFrame 確保背景設置後再顯示
+                requestAnimationFrame(() => {
+                    this.sceneContainer.style.opacity = '1';
+                });
+            });
         };
         
         bgImage.onerror = (error) => {
             console.error('Failed to load background image:', this.currentScene.background, error);
             // 設置備用背景顏色
+            this.sceneContainer.style.backgroundImage = 'none';
             this.sceneContainer.style.backgroundColor = 'var(--primary-color)';
             this.sceneContainer.style.opacity = '1';
         };
