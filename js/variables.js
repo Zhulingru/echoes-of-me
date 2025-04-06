@@ -11,36 +11,45 @@ class GameVariables {
             stable: 10,
             block: 10
         };
+
+        this.labels = {
+            anger: "憤怒",
+            stable: "穩定",
+            block: "封閉"
+        };
     }
 
     // 更新變數值
     updateVariable(name, value) {
         if (name in this.variables) {
-            const newValue = this.variables[name] + value;
-            this.variables[name] = Math.max(0, Math.min(newValue, this.limits[name]));
+            const oldValue = this.variables[name];
+            const newValue = Math.max(0, Math.min(oldValue + value, this.limits[name]));
+            this.variables[name] = newValue;
+            
+            // 觸發視覺效果
+            this.triggerUpdateEffect(name, oldValue, newValue);
+            
             this.checkTriggers();
             this.updateUI();
         }
     }
 
-    // 檢查觸發條件
-    checkTriggers() {
-        // 檢查憤怒值
-        if (this.variables.anger >= 3) {
-            // 觸發 M001 記憶
-            this.triggerMemory('M001');
-        }
+    // 觸發更新效果
+    triggerUpdateEffect(name, oldValue, newValue) {
+        const statusBar = document.querySelector(`#${name}-bar .status-bar-fill`);
+        if (statusBar) {
+            // 添加閃爍效果
+            statusBar.classList.add('update-flash');
+            setTimeout(() => statusBar.classList.remove('update-flash'), 500);
 
-        // 檢查穩定度
-        if (this.variables.stable < 0) {
-            // 觸發混亂選項
-            this.triggerChaos();
-        }
-
-        // 檢查封閉值
-        if (this.variables.block >= 2) {
-            // 封鎖特定選項
-            this.blockInteractions();
+            // 如果是顯著變化，添加特殊效果
+            if (Math.abs(newValue - oldValue) >= 2) {
+                const container = document.querySelector(`#${name}-container`);
+                if (container) {
+                    container.classList.add('significant-change');
+                    setTimeout(() => container.classList.remove('significant-change'), 1000);
+                }
+            }
         }
     }
 
@@ -48,32 +57,82 @@ class GameVariables {
     updateUI() {
         const statusBar = document.getElementById('status-bar');
         if (statusBar) {
-            statusBar.innerHTML = `
-                <div>憤怒: ${this.variables.anger}</div>
-                <div>穩定: ${this.variables.stable}</div>
-                <div>封閉: ${this.variables.block}</div>
-            `;
+            statusBar.innerHTML = Object.entries(this.variables)
+                .map(([name, value]) => `
+                    <div class="status-item" id="${name}-container">
+                        <div class="status-label">${this.labels[name]}</div>
+                        <div class="status-bar" id="${name}-bar">
+                            <div class="status-bar-fill" style="width: ${(value / this.limits[name]) * 100}%"></div>
+                        </div>
+                        <div class="status-value">${value}</div>
+                    </div>
+                `).join('');
+
+            // 添加裝飾元素
+            const corners = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+            corners.forEach(position => {
+                const corner = document.createElement('div');
+                corner.className = `cyber-corner ${position}`;
+                statusBar.appendChild(corner);
+            });
+        }
+    }
+
+    // 檢查觸發條件
+    checkTriggers() {
+        // 檢查憤怒值
+        if (this.variables.anger >= 3) {
+            this.triggerMemory('M001');
+        }
+
+        // 檢查穩定度
+        if (this.variables.stable < 0) {
+            this.triggerChaos();
+        }
+
+        // 檢查封閉值
+        if (this.variables.block >= 2) {
+            this.blockInteractions();
+        }
+
+        // 檢查複合條件
+        if (this.variables.anger >= 4 && this.variables.block >= 2) {
+            this.triggerMemory('M003');
         }
     }
 
     // 觸發記憶片段
     triggerMemory(memoryId) {
-        // TODO: 實現記憶觸發邏輯
         console.log(`Triggering memory: ${memoryId}`);
+        // 添加視覺效果
+        document.body.classList.add('memory-trigger');
+        setTimeout(() => document.body.classList.remove('memory-trigger'), 1000);
     }
 
     // 觸發混亂狀態
     triggerChaos() {
-        // TODO: 實現混亂狀態邏輯
         console.log('Chaos mode activated');
+        document.body.classList.add('chaos-mode');
+        setTimeout(() => document.body.classList.remove('chaos-mode'), 1000);
     }
 
     // 封鎖互動
     blockInteractions() {
-        // TODO: 實現互動封鎖邏輯
         console.log('Interactions blocked');
+        const buttons = document.querySelectorAll('.choice-button');
+        buttons.forEach(button => {
+            if (button.dataset.requiresInteraction === 'true') {
+                button.disabled = true;
+                button.classList.add('blocked');
+            }
+        });
     }
 }
 
 // 創建全局遊戲變數實例
-const gameVars = new GameVariables(); 
+const gameVars = new GameVariables();
+
+// 初始化UI
+document.addEventListener('DOMContentLoaded', () => {
+    gameVars.updateUI();
+}); 
