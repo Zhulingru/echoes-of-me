@@ -250,28 +250,35 @@ class ExplorationSystem {
             effectsContainer.className = 'exploration-effects';
             
             Object.entries(result.effects).forEach(([variable, value]) => {
-                // 更新遊戲變數
+                // 更新變數
                 gameVars.updateVariable(variable, value);
                 
-                const effect = document.createElement('div');
-                effect.className = 'exploration-effect';
-                effect.textContent = `${this.getVariableName(variable)}: ${value > 0 ? '+' : ''}${value}`;
-                effectsContainer.appendChild(effect);
+                // 創建效果顯示
+                const effectItem = document.createElement('div');
+                effectItem.className = 'exploration-effect-item';
+                
+                const effectName = document.createElement('span');
+                effectName.className = 'effect-name';
+                effectName.textContent = this.getVariableName(variable) + ': ';
+                
+                const effectValue = document.createElement('span');
+                effectValue.className = value > 0 ? 'effect-positive' : (value < 0 ? 'effect-negative' : 'effect-neutral');
+                effectValue.textContent = value > 0 ? '+' + value : value;
+                
+                effectItem.appendChild(effectName);
+                effectItem.appendChild(effectValue);
+                effectsContainer.appendChild(effectItem);
             });
             
             resultContainer.appendChild(effectsContainer);
         }
         
-        // 添加繼續按鈕
-        const continueButton = document.createElement('button');
-        continueButton.textContent = '繼續';
-        continueButton.className = 'exploration-continue-btn';
-        continueButton.onclick = () => {
-            document.querySelector('.exploration-result-container').remove();
-            // 顯示探索菜單
-            this.showExplorationMenu();
-        };
-        resultContainer.appendChild(continueButton);
+        // 添加返回按鈕
+        const backButton = document.createElement('button');
+        backButton.textContent = '返回';
+        backButton.className = 'exploration-back-btn';
+        backButton.onclick = () => this.closeExplorationResult();
+        resultContainer.appendChild(backButton);
         
         // 創建外層容器並添加到UI
         const container = document.createElement('div');
@@ -279,6 +286,12 @@ class ExplorationSystem {
         container.appendChild(resultContainer);
         
         document.getElementById('ui-container').appendChild(container);
+    }
+    
+    // 關閉探索結果
+    closeExplorationResult() {
+        document.querySelector('.exploration-result-container').remove();
+        this.showExplorationMenu();
     }
     
     getVariableName(variable) {

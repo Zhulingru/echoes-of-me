@@ -8,20 +8,19 @@
         {
             "id": "CH001",
             "text": "點擊是",
-            "effects": { "anger": 1 },
+            "effects": { "memory": 1 },
             "next": "M001"
         },
         {
             "id": "CH002",
             "text": "點擊否",
-            "effects": { "stable": 2 },
-            "next": null
+            "effects": { "stable": 1 },
+            "next": "S002"
         },
         {
             "id": "CH003",
             "text": "觸碰螢幕",
-            "effects": { "stable": -1 },
-            "requiresInteraction": true,
+            "effects": { "joy": 1 },
             "next": "S002"
         }
     ]

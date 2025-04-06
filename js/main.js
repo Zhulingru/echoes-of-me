@@ -133,7 +133,7 @@ class Game {
                 return {
                     id: 'S002',
                     name: '鏡前走廊',
-                    background: 'assets/images/mirror-corridor.jpg',
+                    background: 'assets/images/scene/S002.png',
                     speaker: null,
                     dialog: '一條昏暗的金屬走廊延伸至遠方，牆上的霓虹燈閃爍著微弱的藍光。\n\n走廊盡頭有一面半透明的鏡子，你看到一個模糊的身影。',
                     choices: [
@@ -146,14 +146,14 @@ class Game {
                         {
                             id: 'CH004-B',
                             text: '「那不是窗外的我嗎……」你低聲喃喃。',
-                            effects: { anger: 1, stable: 1 },
-                            next: 'M035'
+                            effects: { stable: 1 },
+                            next: 'S001'
                         },
                         {
                             id: 'CH005',
-                            text: '嘲諷她：「你是我拋出來的幻想嗎？」',
-                            effects: { anger: 1, stable: -1 },
-                            next: 'M034-B'
+                            text: '進入探索模式',
+                            effects: { memory: 1 },
+                            next: null
                         }
                     ]
                 };
@@ -161,7 +161,7 @@ class Game {
                 return {
                     id: sceneId,
                     name: '未知場景',
-                    background: 'assets/images/placeholder.jpg',
+                    background: 'assets/images/scene/placeholder.png',
                     speaker: null,
                     dialog: '場景數據未找到。',
                     choices: []

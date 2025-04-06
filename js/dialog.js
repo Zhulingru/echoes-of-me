@@ -149,7 +149,9 @@ class DialogSystem {
                 console.warn('未知的下一個目標類型:', choice.next);
             }
         } else {
-            console.log('沒有下一個目標，保持當前場景');
+            console.log('沒有下一個目標，進入探索模式');
+            // 如果沒有下一個目標，切換到探索模式
+            window.game.switchMode('explore');
         }
     }
 }
