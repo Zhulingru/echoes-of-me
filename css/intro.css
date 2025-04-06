@@ -1,0 +1,83 @@
+/* 開場動畫容器 */
+#intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 隱藏主遊戲容器 */
+.intro-playing #game-container {
+    display: none;
+}
+
+/* 幻燈片 */
+.intro-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 文字靠底 */
+    padding-bottom: 10%;
+}
+
+.intro-slide.active {
+    opacity: 1;
+}
+
+/* 文字內容 */
+.intro-text {
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    padding: 0 20%;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+}
+
+.intro-slide.active .intro-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 跳過按鈕 */
+#skip-intro {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 16px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 1px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+#skip-intro:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 淡出動畫 */
+.fade-out {
+    animation: fadeOut 1.5s forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+} 
