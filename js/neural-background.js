@@ -5,7 +5,7 @@ let connectDistance = 150; // 粒子之間產生連接的最大距離
 let neuralCanvas;          // p5.js canvas
 let welcomeContainer;      // 歡迎容器
 let startButton;           // 開始按鈕
-let animationStarted = false;  // 標記動畫是否已開始
+let animationStarted = true;  // 標記動畫是否已開始 - 改為默認開始
 
 // 初始化 p5.js
 const neuralSketch = function(p) {
@@ -25,10 +25,6 @@ const neuralSketch = function(p) {
   };
   
   p.draw = function() {
-    if (!animationStarted) {
-      return; // 動畫未開始時不執行
-    }
-    
     p.background(0, 20); // 添加輕微的殘影效果
     
     // 更新和顯示所有粒子
@@ -66,9 +62,6 @@ const neuralSketch = function(p) {
   };
   
   p.mouseMoved = function() {
-    // 讓部分粒子被滑鼠吸引
-    if (!animationStarted) return;
-    
     for (let i = 0; i < particles.length; i++) {
       if (Math.random() < 0.05) {  // 5%的粒子對滑鼠有反應
         let force = p5.Vector.sub(
@@ -188,26 +181,45 @@ function createWelcomeInterface() {
   
   // 添加點擊事件
   startButton.addEventListener('click', function() {
-    startAnimation();
+    // 創建過渡效果元素
+    const transitionOverlay = document.createElement('div');
+    transitionOverlay.style.position = 'fixed';
+    transitionOverlay.style.top = '0';
+    transitionOverlay.style.left = '0';
+    transitionOverlay.style.width = '100vw';
+    transitionOverlay.style.height = '100vh';
+    transitionOverlay.style.backgroundColor = 'black';
+    transitionOverlay.style.zIndex = '1500';
+    transitionOverlay.style.opacity = '0';
+    transitionOverlay.style.transition = 'opacity 1.5s ease';
+    document.body.appendChild(transitionOverlay);
     
-    // 延遲後移除歡迎界面並啟動開場動畫
+    // 淡入黑色覆蓋層
     setTimeout(() => {
-      welcomeContainer.style.opacity = '0';
-      welcomeContainer.style.transition = 'opacity 1s ease';
+      transitionOverlay.style.opacity = '1';
       
+      // 完全淡入後
       setTimeout(() => {
+        // 移除歡迎界面
         welcomeContainer.remove();
+        
+        // 啟動開場動畫
         startIntroSequence();
-      }, 1000);
-    }, 500);
+        
+        // 延遲後淡出覆蓋層
+        setTimeout(() => {
+          transitionOverlay.style.opacity = '0';
+          
+          // 完全淡出後移除覆蓋層
+          setTimeout(() => {
+            transitionOverlay.remove();
+          }, 1500);
+        }, 500);
+      }, 1500);
+    }, 100);
   });
   
   welcomeContainer.appendChild(startButton);
-}
-
-// 啟動動畫
-function startAnimation() {
-  animationStarted = true;
 }
 
 // 開始開場動畫序列
