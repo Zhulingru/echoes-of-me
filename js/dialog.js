@@ -116,12 +116,33 @@ class DialogSystem {
         
         // 創建每個選項按鈕
         choices.forEach(choice => {
-            const choiceButton = createChoiceButton(choice);
-            this.choicesContainer.appendChild(choiceButton);
+            const button = document.createElement('button');
+            button.className = 'choice-button';
+            button.textContent = choice.text;
+            
+            // 直接綁定點擊事件
+            button.onclick = (e) => {
+                e.preventDefault();
+                console.log('Choice clicked:', choice);
+                
+                // 禁用所有按鈕
+                document.querySelectorAll('.choice-button').forEach(btn => {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.5';
+                });
+                
+                // 高亮當前選擇
+                button.style.backgroundColor = 'rgba(0, 255, 157, 0.3)';
+                button.style.borderColor = 'var(--accent-color)';
+                
+                // 立即處理選擇
+                this.handleChoice(choice);
+            };
+            
+            this.choicesContainer.appendChild(button);
         });
     }
     
-    // 處理選項選擇
     handleChoice(choice) {
         if (!choice) {
             console.error('Invalid choice object');
@@ -135,39 +156,19 @@ class DialogSystem {
             Object.entries(choice.effects).forEach(([variable, value]) => {
                 if (window.gameVars) {
                     window.gameVars.updateVariable(variable, value);
-                } else {
-                    console.error('Game variables system not initialized');
                 }
             });
         }
         
-        // 觸發下一個對話或場景
+        // 觸發下一個場景或記憶
         if (choice.next) {
-            console.log('下一個目標:', choice.next);
-            
-            if (!window.game) {
-                console.error('Game system not initialized');
-                return;
-            }
-            
             if (choice.next.startsWith('S')) {
-                // 場景轉換
-                console.log('加載場景:', choice.next);
                 window.game.loadScene(choice.next);
             } else if (choice.next.startsWith('M')) {
-                // 記憶片段觸發
-                console.log('觸發記憶:', choice.next);
                 window.game.triggerMemory(choice.next);
-            } else {
-                console.warn('未知的下一個目標類型:', choice.next);
             }
         } else {
-            console.log('沒有下一個目標，進入探索模式');
-            if (window.game) {
-                window.game.switchMode('explore');
-            } else {
-                console.error('Game system not initialized');
-            }
+            window.game.switchMode('explore');
         }
     }
 }
@@ -178,7 +179,10 @@ function createChoiceButton(choice) {
     button.textContent = choice.text;
     
     // 添加點擊事件
-    button.addEventListener('click', () => {
+    button.onclick = (e) => {
+        e.preventDefault();
+        console.log('Choice button clicked:', choice);
+        
         // 禁用所有按鈕
         document.querySelectorAll('.choice-button').forEach(btn => {
             btn.disabled = true;
@@ -186,29 +190,16 @@ function createChoiceButton(choice) {
         });
         
         // 高亮當前選擇
-        button.style.backgroundColor = 'rgba(255, 107, 107, 0.3)';
-        button.style.borderColor = '#ff6b6b';
+        button.style.backgroundColor = 'rgba(0, 255, 157, 0.3)';
+        button.style.borderColor = 'var(--accent-color)';
         
-        // 延遲執行選擇效果
-        setTimeout(() => {
-            if (window.dialogSystem) {
-                window.dialogSystem.handleChoice(choice);
-            } else {
-                console.error('Dialog system not initialized');
-            }
-        }, 500);
-    });
-    
-    // 添加觸摸事件支持
-    button.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        button.style.transform = 'scale(0.98)';
-    });
-    
-    button.addEventListener('touchend', (e) => {
-        e.preventDefault();
-        button.style.transform = 'scale(1)';
-    });
+        // 立即執行選擇效果
+        if (window.dialogSystem) {
+            window.dialogSystem.handleChoice(choice);
+        } else {
+            console.error('Dialog system not initialized');
+        }
+    };
     
     return button;
 }
