@@ -94,36 +94,7 @@ class ExplorationSystem {
         const backButton = document.createElement('button');
         backButton.textContent = '返回';
         backButton.className = 'exploration-back-btn';
-        backButton.onclick = () => {
-            // 立即移除所有探索相關的介面
-            const containers = [
-                '.exploration-container',
-                '.exploration-interface-container',
-                '.exploration-result-container',
-                '.exploration-message'
-            ];
-            
-            // 先清除對話框內容
-            if (window.dialogSystem) {
-                window.dialogSystem.clear();
-            }
-            
-            // 移除所有探索相關的介面
-            containers.forEach(selector => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    element.remove();
-                }
-            });
-            
-            // 等待一個極短暫的時間確保介面完全移除
-            setTimeout(() => {
-                // 返回當前場景
-                if (window.game.currentScene) {
-                    window.game.renderScene();
-                }
-            }, 50);
-        };
+        backButton.onclick = () => this.returnToMainScene();
         menuContainer.appendChild(backButton);
         
         // 創建外層容器並添加到UI
@@ -201,12 +172,9 @@ class ExplorationSystem {
         
         // 添加返回按鈕
         const backButton = document.createElement('button');
-        backButton.textContent = '返回地圖選擇';
+        backButton.textContent = '返回';
         backButton.className = 'exploration-back-btn';
-        backButton.onclick = () => {
-            document.querySelector('.exploration-interface-container').remove();
-            this.showExplorationMenu();
-        };
+        backButton.onclick = () => this.returnToMainScene();
         interfaceContainer.appendChild(backButton);
         
         // 創建外層容器並添加到UI
@@ -329,39 +297,7 @@ class ExplorationSystem {
     
     // 關閉探索結果
     closeExplorationResult() {
-        const resultContainer = document.querySelector('.exploration-result-container');
-        if (resultContainer) {
-            resultContainer.remove();
-        }
-        
-        // 不論移動點數多少，直接返回當前場景
-        if (window.game && window.game.currentScene) {
-            // 清除所有探索相關的介面
-            const containers = [
-                '.exploration-container',
-                '.exploration-interface-container',
-                '.exploration-result-container',
-                '.exploration-message'
-            ];
-            
-            // 先清除對話框內容
-            if (window.dialogSystem) {
-                window.dialogSystem.clear();
-            }
-            
-            // 移除所有探索相關的介面
-            containers.forEach(selector => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    element.remove();
-                }
-            });
-            
-            // 等待一個極短暫的時間確保介面完全移除
-            setTimeout(() => {
-                window.game.renderScene();
-            }, 50);
-        }
+        this.returnToMainScene();
     }
     
     getVariableName(variable) {
@@ -389,6 +325,38 @@ class ExplorationSystem {
         setTimeout(() => {
             msgContainer.remove();
         }, 3000);
+    }
+    
+    // 新增統一的返回方法
+    returnToMainScene() {
+        // 清除所有探索相關的介面
+        const containers = [
+            '.exploration-container',
+            '.exploration-interface-container',
+            '.exploration-result-container',
+            '.exploration-message'
+        ];
+        
+        // 先清除對話框內容
+        if (window.dialogSystem) {
+            window.dialogSystem.clear();
+        }
+        
+        // 移除所有探索相關的介面
+        containers.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                element.remove();
+            }
+        });
+        
+        // 等待一個極短暫的時間確保介面完全移除
+        setTimeout(() => {
+            // 返回當前場景
+            if (window.game.currentScene) {
+                window.game.renderScene();
+            }
+        }, 50);
     }
 }
 
