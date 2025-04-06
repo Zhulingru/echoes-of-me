@@ -10,7 +10,6 @@
     border-radius: 5px;
     pointer-events: auto;
     box-shadow: 0 0 15px var(--accent-color-dim);
-    z-index: 1000;
 }
 
 .speaker {
@@ -52,7 +51,6 @@
     flex-direction: column;
     gap: 10px;
     pointer-events: auto;
-    z-index: 1000;
 }
 
 .choice-button {

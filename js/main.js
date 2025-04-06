@@ -2,7 +2,6 @@ class Game {
     constructor() {
         this.currentScene = null;
         this.sceneContainer = document.getElementById('scene-container');
-        this.sceneTitle = document.getElementById('scene-title');
         this.init();
     }
 
@@ -15,6 +14,7 @@ class Game {
 
     async loadScene(sceneId) {
         try {
+            // TODO: 從 JSON 檔案載入場景數據
             const sceneData = await this.fetchSceneData(sceneId);
             this.currentScene = sceneData;
             this.renderScene();
@@ -24,10 +24,10 @@ class Game {
     }
 
     async fetchSceneData(sceneId) {
-        // TODO: 從 JSON 檔案載入場景數據
+        // TODO: 實現場景數據載入
+        // 這裡先返回測試數據
         return {
             id: 'S001',
-            title: '記憶引渡站',
             background: 'assets/images/memory-station.jpg',
             dialog: '系統啟動中...',
             choices: [
@@ -56,11 +56,6 @@ class Game {
     renderScene() {
         if (!this.currentScene) return;
 
-        // 更新場景標題
-        if (this.sceneTitle) {
-            this.sceneTitle.textContent = this.currentScene.title;
-        }
-
         // 設置背景
         if (this.sceneContainer) {
             this.sceneContainer.style.backgroundImage = `url(${this.currentScene.background})`;
@@ -71,22 +66,6 @@ class Game {
 
         // 顯示選項
         dialogSystem.showChoices(this.currentScene.choices);
-    }
-
-    // 主要功能按鈕
-    explore() {
-        console.log('探索模式');
-        // TODO: 實現探索功能
-    }
-
-    battle() {
-        console.log('戰鬥模式');
-        // TODO: 實現戰鬥功能
-    }
-
-    memory() {
-        console.log('記憶模式');
-        // TODO: 實現記憶功能
     }
 }
 
