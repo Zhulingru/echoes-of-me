@@ -82,12 +82,12 @@ body {
         padding: 15px;
         bottom: 160px;
     }
-    
+   
     #choices-container {
         width: 95%;
         bottom: 20px;
     }
-    
+   
     .choice-button {
         padding: 12px 15px;
         font-size: 14px;
@@ -444,8 +444,8 @@ body {
         right: 20px;
         padding: 8px 12px;
     }
-    
+   
     #volume-slider {
         width: 80px;
     }
-} 
+}
