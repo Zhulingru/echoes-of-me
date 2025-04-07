@@ -67,16 +67,18 @@ class IntroSequence {
         this.preloadAudio('assets/music/echoes music.mp3');
 
         // 預加載所有圖片
+        let loadedCount = 0;
+        
         this.slides.forEach((slide, index) => {
             const img = new Image();
             
             img.onload = () => {
-                this.loadedImages++;
+                loadedCount++;
                 console.log(`圖片 ${index + 1}/${totalImages} 已加載: ${slide.image}`);
-                loadingContainer.textContent = `正在載入開場動畫... ${this.loadedImages}/${totalImages}`;
+                loadingContainer.textContent = `正在載入開場動畫... ${loadedCount}/${totalImages}`;
                 
                 // 所有圖片加載完成後開始動畫
-                if (this.loadedImages === totalImages) {
+                if (loadedCount === totalImages) {
                     console.log('所有圖片加載完成，開始動畫');
                     loadingContainer.remove();
                     this.initIntro();
@@ -87,17 +89,39 @@ class IntroSequence {
             
             img.onerror = (err) => {
                 console.error(`圖片加載失敗 ${slide.image}:`, err);
-                this.loadedImages++;
-                loadingContainer.textContent = `正在載入開場動畫... ${this.loadedImages}/${totalImages} (錯誤)`;
+                // 嘗試使用不同的方式加載
+                const retryImg = new Image();
+                retryImg.onload = () => {
+                    console.log(`圖片重試成功: ${slide.image}`);
+                    loadedCount++;
+                    loadingContainer.textContent = `正在載入開場動畫... ${loadedCount}/${totalImages}`;
+                    
+                    if (loadedCount === totalImages) {
+                        console.log('所有圖片加載完成，開始動畫');
+                        loadingContainer.remove();
+                        this.initIntro();
+                        this.playAudio();
+                        this.showSlide(0);
+                    }
+                };
                 
-                // 即使有錯誤也繼續嘗試啟動動畫
-                if (this.loadedImages === totalImages) {
-                    console.log('圖片加載完成但有錯誤，嘗試開始動畫');
-                    loadingContainer.remove();
-                    this.initIntro();
-                    this.playAudio();
-                    this.showSlide(0);
-                }
+                retryImg.onerror = () => {
+                    console.error(`圖片重試失敗: ${slide.image}`);
+                    loadedCount++;
+                    loadingContainer.textContent = `正在載入開場動畫... ${loadedCount}/${totalImages} (錯誤)`;
+                    
+                    if (loadedCount === totalImages) {
+                        console.log('圖片加載完成但有錯誤，嘗試開始動畫');
+                        loadingContainer.remove();
+                        this.initIntro();
+                        this.playAudio();
+                        this.showSlide(0);
+                    }
+                };
+                
+                // 嘗試使用URL編碼的路徑
+                const encodedPath = slide.image.replace(/ /g, '%20');
+                retryImg.src = encodedPath;
             };
             
             // 開始加載圖片
@@ -182,8 +206,11 @@ class IntroSequence {
         this.slides.forEach((slide, index) => {
             const slideDiv = document.createElement('div');
             slideDiv.className = 'intro-slide';
-            // 使用內嵌樣式直接設置背景，確保圖片路徑正確
-            slideDiv.style.backgroundImage = `url("${slide.image}")`;
+            
+            // 使用經過URL編碼的圖片路徑
+            const encodedPath = slide.image.replace(/ /g, '%20');
+            console.log(`設置幻燈片 ${index + 1} 背景: ${encodedPath}`);
+            slideDiv.style.backgroundImage = `url("${encodedPath}")`;
             
             const textDiv = document.createElement('div');
             textDiv.className = 'intro-text';
