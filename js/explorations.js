@@ -43,36 +43,43 @@ class ExplorationSystem {
         
         // 創建探索選單容器
         const menuContainer = document.createElement('div');
-        menuContainer.className = 'exploration-menu';
+        menuContainer.className = 'exploration-map';
+        
+        // 添加返回按鈕
+        const returnButton = document.createElement('button');
+        returnButton.textContent = '返回';
+        returnButton.className = 'return-button';
+        returnButton.onclick = () => this.returnToMainScene();
+        menuContainer.appendChild(returnButton);
         
         // 添加標題
         const title = document.createElement('h2');
         title.textContent = '探索地圖';
-        title.className = 'exploration-title';
+        title.className = 'map-title';
         menuContainer.appendChild(title);
         
         // 添加移動點數信息
         const pointsInfo = document.createElement('div');
         pointsInfo.textContent = `移動點數: ${this.movementPoints} / 3`;
-        pointsInfo.className = 'exploration-points';
+        pointsInfo.className = 'map-navigation';
         menuContainer.appendChild(pointsInfo);
         
         // 創建地圖選擇區域
         const mapsContainer = document.createElement('div');
-        mapsContainer.className = 'exploration-maps';
+        mapsContainer.className = 'map-grid';
         
         // 添加每個地圖選項
         Object.entries(this.maps).forEach(([id, mapData]) => {
             const mapItem = document.createElement('div');
-            mapItem.className = 'exploration-map-item';
+            mapItem.className = 'map-item';
             mapItem.onclick = () => this.selectMap(id);
             
             const mapImage = document.createElement('div');
-            mapImage.className = 'exploration-map-image';
+            mapImage.className = 'map-image';
             mapImage.style.backgroundImage = `url(${mapData.image})`;
             
             const mapInfo = document.createElement('div');
-            mapInfo.className = 'exploration-map-info';
+            mapInfo.className = 'map-info';
             
             const mapName = document.createElement('h3');
             mapName.textContent = mapData.name;
